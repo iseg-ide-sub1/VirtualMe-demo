@@ -1,66 +1,79 @@
-import * as vscode from 'vscode';
+import * as vscode from 'vscode'
 
 export function activate(context: vscode.ExtensionContext) {
-	let disposable = vscode.commands.registerCommand('virtualme-demo.helloWorld', () => {
-		vscode.window.showInformationMessage('Hello World from VirtualME Demo!');
-	});
+	/** 注册命令：virtualme-demo.virtuame */
+	const disposable = vscode.commands.registerCommand('virtualme-demo.virtualme', () => {
+		vscode.window.showInformationMessage('Thanks for using VirtualME Demo!')
+	})
+	context.subscriptions.push(disposable)
 
-	context.subscriptions.push(disposable);
+	// const taskStartWatcher = vscode.tasks.onDidStartTaskProcess(event => {
+	// 	console.log(`Task started: ${event.execution.task.name}`)
+	// 	vscode.window.showInformationMessage(`Task started: ${event.execution.task.name}`)
+	// })
+	// context.subscriptions.push(taskStartWatcher)
 
-	// 监听文档变化
-	const fileChangeWatcher = vscode.workspace.onDidChangeTextDocument(async (event: vscode.TextDocumentChangeEvent) => {
-		console.log(`File changed: ${event.document.uri.fsPath}`);
+	const createFilesWatcher = vscode.workspace.onDidCreateFiles(event => {
+		const formattedTime = getFormattedTime()
+		console.log(`${formattedTime}          Created files: ${event.files}`)
+		vscode.window.showInformationMessage(`${formattedTime}          Created files: ${event.files}`)
+	})
+	context.subscriptions.push(createFilesWatcher)
 
-		// 获取变化的第一个位置（假设只处理第一个变化的位置）
-		const changePosition = event.contentChanges[0]?.range.start;
-		if (!changePosition) {
-			console.log("No change position found.");
-			return;
-		}
+	if (vscode.workspace.workspaceFolders) {
+		const filesWatcher = vscode.workspace.createFileSystemWatcher('**/*')
+		// 监听文件更改事件
+        filesWatcher.onDidChange(uri => {
+			const formattedTime = getFormattedTime()
+			console.log(`${formattedTime}          File changed: ${uri.fsPath}`)
+			vscode.window.showInformationMessage(`${formattedTime}          File changed: ${uri.fsPath}`)
+        })
 
-		// 调用函数获取变化位置的符号信息链
-		const symbolHierarchy = await getSymbolHierarchyAtPosition(event.document, changePosition);
-		if (symbolHierarchy && symbolHierarchy.length > 0) {
-			console.log('Symbol hierarchy (from file to deepest symbol):');
-			symbolHierarchy.forEach(symbol => {
-				console.log(`- ${symbol.name} (${symbol.kind})`);
-			});
-		} else {
-			console.log("No symbol hierarchy found at the changed position.");
-		}
-	});
-	context.subscriptions.push(fileChangeWatcher);
+        // 监听文件创建事件
+        filesWatcher.onDidCreate(uri => {
+			const formattedTime = getFormattedTime()
+			console.log(`${formattedTime}          File created: ${uri.fsPath}`)
+			vscode.window.showInformationMessage(`${formattedTime}          File created: ${uri.fsPath}`)
+        })
+
+        // 监听文件删除事件
+        filesWatcher.onDidDelete(uri => {
+			const formattedTime = getFormattedTime()
+			console.log(`${formattedTime}          File deleted: ${uri.fsPath}`)
+			vscode.window.showInformationMessage(`${formattedTime}          File deleted: ${uri.fsPath}`)
+        })
+	} else {
+		vscode.window.showInformationMessage('No workspace folders are open.')
+	}
+	
 }
 
-// 获取指定文档中特定位置的符号层级链
-async function getSymbolHierarchyAtPosition(document: vscode.TextDocument, position: vscode.Position): Promise<vscode.DocumentSymbol[] | undefined> {
-	const symbols = await vscode.commands.executeCommand<vscode.DocumentSymbol[]>(
-		'vscode.executeDocumentSymbolProvider', document.uri
-	);
-	if (!symbols) {
-		return undefined;
-	}
-
-	return findSymbolHierarchyAtPosition(symbols, position);
-}
-
-// 递归查找符号层级链，从文件级到最小符号
-function findSymbolHierarchyAtPosition(symbols: vscode.DocumentSymbol[], position: vscode.Position): vscode.DocumentSymbol[] | undefined {
-	for (const symbol of symbols) {
-		if (symbol.range.contains(position)) {
-			// 如果光标在当前符号范围内，继续查找子符号
-			if (symbol.children.length > 0) {
-				const childHierarchy = findSymbolHierarchyAtPosition(symbol.children, position);
-				if (childHierarchy) {
-					// 返回包含上级符号和子符号的层级链
-					return [symbol, ...childHierarchy];
-				}
-			}
-			// 如果没有子符号或没有找到子符号，返回当前符号
-			return [symbol];
-		}
-	}
-	return undefined; // 没有找到符号
+/**
+ * 获取格式化的当前时间字符串，包括年月日时分秒和毫秒。
+ * @returns {string} 格式化的当前时间。
+ */
+function getFormattedTime() {
+	const now = new Date()
+	// 获取年月日小时分钟秒和毫秒
+	const year = now.getFullYear()
+	const month = now.getMonth() + 1 // getMonth() 返回的月份从0开始，所以需要加1
+	const day = now.getDate()
+	const hours = now.getHours()
+	const minutes = now.getMinutes()
+	const seconds = now.getSeconds()
+	const milliseconds = now.getMilliseconds()
+  
+	// 格式化月份、日期、小时、分钟、秒和毫秒，不足两位数的前面补零
+	const formattedMonth = month.toString().padStart(2, '0')
+	const formattedDay = day.toString().padStart(2, '0')
+	const formattedHours = hours.toString().padStart(2, '0')
+	const formattedMinutes = minutes.toString().padStart(2, '0')
+	const formattedSeconds = seconds.toString().padStart(2, '0')
+	const formattedMilliseconds = milliseconds.toString().padStart(3, '0')
+  
+	// 组合成最终的字符串
+	const formattedTime = `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}.${formattedMilliseconds}`
+	return formattedTime
 }
 
 export function deactivate() { }

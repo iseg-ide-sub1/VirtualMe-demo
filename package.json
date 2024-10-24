@@ -10,15 +10,15 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:virtualme-demo.helloWorld"
+    "onCommand:virtualme-demo.virutalme"
   ],
 
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "virtualme-demo.helloWorld",
-        "title": "Hello World"
+        "command": "virtualme-demo.virtualme",
+        "title": "VirtualME Demo"
       }
     ]
   },
