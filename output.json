@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Generic 啦啦啦啦啦 Animal",
+    "type": "Animal"
+  },
+  {
+    "name": "Sammy the Snake",
+    "type": "Snake"
+  },
+  {
+    "name": "Tommy the Horse",
+    "type": "Horse"
+  }
+]
