@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-10-28 20:29:14.855",
+    "eventType": "Add text document",
+    "artifact": {
+      "name": "main()",
+      "type": "Function",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "main()",
+          "type": "Function"
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "timeStamp": "2024-10-28 20:29:15.570",
+    "eventType": "Save a file",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "File"
+    }
+  }
+]

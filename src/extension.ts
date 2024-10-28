@@ -125,9 +125,8 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
-	let logsJson = JSON.stringify(logs, null, 2)
-
-	const baseDirectory = '/Users/suyunhe/virtualme-demo/' 
+	const logsJson = JSON.stringify(logs, null, 2)
+	const baseDirectory = "/Users/suyunhe/virtualme-demo/log/"
 	const fileName = startTime + ".json" 
 	const filePath = path.join(baseDirectory, fileName)
 	fs.writeFileSync(filePath, logsJson, 'utf8')
@@ -183,7 +182,7 @@ function getFormattedTime1() {
 	const formattedSeconds = seconds.toString().padStart(2, '0')
   
 	// 组合成最终的字符串
-	const formattedTime = `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`
+	const formattedTime = `${year}-${formattedMonth}-${formattedDay}-${formattedHours}.${formattedMinutes}.${formattedSeconds}`
 	return formattedTime
 }
 
@@ -213,19 +212,16 @@ async function getSymbolHierarchyAtPosition(document: vscode.TextDocument, posit
 function findSymbolHierarchyAtPosition(symbols: vscode.DocumentSymbol[], position: vscode.Position): vscode.DocumentSymbol[] | undefined {
     for (const symbol of symbols) {
         if (symbol.range.contains(position)) {
-            // 如果光标在当前符号范围内，继续查找子符号
             if (symbol.children.length > 0) {
                 const childHierarchy = findSymbolHierarchyAtPosition(symbol.children, position);
                 if (childHierarchy) {
-                    // 返回包含上级符号和子符号的层级链
                     return [symbol, ...childHierarchy];
                 }
             }
-            // 如果没有子符号或没有找到子符号，返回当前符号
             return [symbol];
         }
     }
-    return undefined; // 没有找到符号
+    return undefined;
 }
 
 /**
