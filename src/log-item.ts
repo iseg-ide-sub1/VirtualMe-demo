@@ -1,10 +1,14 @@
 enum EventType {
     OpenTextDocument = "Open text document",
     CloseTextDocument = "Close text document",
-    ChangeTextDocument = "Change text document",
+    AddTextDocument = "Add text document",
+    DeleteTextDocument = "Delete text document",
+    EditTextDocument = "Edit text document",
+    RedoTextDocument = "Redo text document",
+    UndoTextDocument = "Undo text document",
     CreateFile = "Create a file",
     DeleteFile = "Delete a file",
-    ChangeFile = "Change a file"
+    SaveFile = "Save a file"
 }
 
 export enum ArtiFactType {
@@ -37,6 +41,15 @@ export enum ArtiFactType {
 		Unknown = "Unknown"
 }
 
+export enum ChangeType {
+    Add = "Add",
+    Delete = "Delete",
+    Edit = "Edit",
+    Redo = "Redo",
+    Undo = "Undo",
+    Unknown = "Unknown"
+}
+
 export class ArtiFact {
     name: string
     type: ArtiFactType
@@ -65,11 +78,14 @@ export class ArtiFact {
 }
 
 export class LogItem {
+    static #nextId = 1
+    id: number
     timeStamp: string
     eventType: EventType
     artifact: ArtiFact
 
     constructor(eventType: EventType, artifact: ArtiFact) {
+        this.id = LogItem.#nextId++
         this.timeStamp = getFormattedTime()
         this.eventType = eventType
         this.artifact = artifact
@@ -80,36 +96,6 @@ export class LogItem {
             + "  1. EventType: " + this.eventType + "\n"
             + "  2. Artifact: \n" + this.artifact
         console.log(output)
-    }
-
-    static serializeLogItem(item: LogItem): string {
-        function replacer(value: any) {
-            if (value instanceof ArtiFact) {
-                return {
-                    name: value.name,
-                    type: value.type,
-                    hierarchy: value.hierarchy?.map(child => LogItem.serializeArtiFact(child))
-                };
-            } else if (value instanceof LogItem) {
-                return LogItem.serializeLogItem(value);
-            }
-            return value;
-        }
-        return JSON.stringify(item, replacer, 2);
-    }
-
-    static serializeArtiFact(artifact: ArtiFact): any {
-        function replacer(value: any) {
-            if (value instanceof ArtiFact) {
-                return {
-                    name: value.name,
-                    type: value.type,
-                    hierarchy: value.hierarchy?.map(child => LogItem.serializeArtiFact(child))
-                };
-            }
-            return value;
-        }
-        return JSON.stringify(artifact, replacer, 2);
     }
 }
 
@@ -125,9 +111,33 @@ export class CloseTextDocumentLog extends LogItem {
     }
 }
 
-export class ChangeTextDocumentLog extends LogItem {
+export class AddTextDocumentLog extends LogItem {
     constructor(artifact: ArtiFact) {
-        super(EventType.ChangeTextDocument, artifact)
+        super(EventType.AddTextDocument, artifact)
+    }
+}
+
+export class DeleteTextDocumentLog extends LogItem {
+    constructor(artifact: ArtiFact) {
+        super(EventType.DeleteTextDocument, artifact)
+    }
+}
+
+export class EditTextDocumentLog extends LogItem {
+    constructor(artifact: ArtiFact) {
+        super(EventType.EditTextDocument, artifact)
+    }
+}
+
+export class RedoTextDocumentLog extends LogItem {
+    constructor(artifact: ArtiFact) {
+        super(EventType.RedoTextDocument, artifact)
+    }
+}
+
+export class UndoTextDocumentLog extends LogItem {
+    constructor(artifact: ArtiFact) {
+        super(EventType.UndoTextDocument, artifact)
     }
 }
 
@@ -143,9 +153,9 @@ export class DeleteFileLog extends LogItem {
     }
 }
 
-export class ChangeFileLog extends LogItem {
+export class SaveFileLog extends LogItem {
     constructor(artifact: ArtiFact) {
-        super(EventType.ChangeFile, artifact)
+        super(EventType.SaveFile, artifact)
     }
 }
 

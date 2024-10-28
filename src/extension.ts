@@ -4,8 +4,11 @@ import * as path from 'path'
 import * as LogItem from './log-item'
 
 let logs: LogItem.LogItem[] = []
+let startTime = ""
 
 export function activate(context: vscode.ExtensionContext) {
+	startTime = getFormattedTime1()
+
 	/** 注册命令：virtualme-demo.virtuame */
 	const disposable = vscode.commands.registerCommand('virtualme-demo.virtualme', () => {
 		vscode.window.showInformationMessage('Thanks for using VirtualME Demo!')
@@ -29,38 +32,74 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(closeTextDocumentWatcher)
 
 	const changeTextDocumentWatcher = vscode.workspace.onDidChangeTextDocument(async (event: vscode.TextDocumentChangeEvent) => {
-        const changePosition = event.contentChanges[0]?.range.start
+        const changeType = analyzeTextEdit(event)
+		const changePosition = event.contentChanges[0]?.range.start
         if (!changePosition) {
             console.log("No change position found.")
             return
         }
         const symbolHierarchy = await getSymbolHierarchyAtPosition(event.document, changePosition)
 		let hierarchys: LogItem.ArtiFact[] = []
-		let type: LogItem.ArtiFactType = LogItem.ArtiFactType.Unknown
+		let name: string = event.document.uri.toString()
+		let type: LogItem.ArtiFactType = LogItem.ArtiFactType.File
+		hierarchys.push(new LogItem.ArtiFact(event.document.uri.toString(), LogItem.ArtiFactType.File))
         if (symbolHierarchy && symbolHierarchy.length > 0) {
 			for (let symbol of symbolHierarchy) {
+				console.log("name: ", symbol.name, "   detail: ", symbol.detail, "   kind: ", symbol.kind, "   start: ", symbol.range.start, "   end: ", symbol.range.end)
+				if (symbol.tags) {
+					console.log("tags: ")
+					for (let tag of symbol.tags) {
+						console.log(tag)
+					}
+				}
+				console.log("childrens: ")
+				for (let children of symbol.children) {
+					console.log(children.name)
+				}
+				
 				const h = new LogItem.ArtiFact(symbol.name, getSymbolKindDescription(symbol.kind))
 				hierarchys.push(h)
 			}
+			name = hierarchys[hierarchys.length - 1].name
 			type = hierarchys[hierarchys.length - 1].type
         }
 
-		const artifact = new LogItem.ArtiFact(event.document.uri.toString(),type, hierarchys) //todo
-		const changeTextDocumentLog = new LogItem.ChangeTextDocumentLog(artifact)
-		logs.push(changeTextDocumentLog)
-		changeTextDocumentLog.output2console()
+		const artifact = new LogItem.ArtiFact(name, type, hierarchys)
+		let changeTextDocumentLog
+		if (changeType === LogItem.ChangeType.Add) {
+			changeTextDocumentLog = new LogItem.AddTextDocumentLog(artifact)
+			logs.push(changeTextDocumentLog)
+			changeTextDocumentLog.output2console()
+		} else if (changeType === LogItem.ChangeType.Delete) {
+			changeTextDocumentLog = new LogItem.DeleteTextDocumentLog(artifact)
+			logs.push(changeTextDocumentLog)
+			changeTextDocumentLog.output2console()
+		} else if (changeType === LogItem.ChangeType.Edit) {
+			changeTextDocumentLog = new LogItem.EditTextDocumentLog(artifact)
+			logs.push(changeTextDocumentLog)
+			changeTextDocumentLog.output2console()
+		} else if (changeType === LogItem.ChangeType.Redo) {
+			changeTextDocumentLog = new LogItem.RedoTextDocumentLog(artifact)
+			logs.push(changeTextDocumentLog)
+			changeTextDocumentLog.output2console()
+		} else if (changeType === LogItem.ChangeType.Undo) {
+			changeTextDocumentLog = new LogItem.UndoTextDocumentLog(artifact)
+			logs.push(changeTextDocumentLog)
+			changeTextDocumentLog.output2console()
+		}
+		
 		// console.log(`          reason: ${event.reason}`)
 	})
 	context.subscriptions.push(changeTextDocumentWatcher)
  
 	if (vscode.workspace.workspaceFolders) {
 		const filesWatcher = vscode.workspace.createFileSystemWatcher('**/*')
-		// 监听文件更改事件
+		// 监听文件保存事件
         filesWatcher.onDidChange(uri => {
 			const artifact = new LogItem.ArtiFact(uri.toString(), LogItem.ArtiFactType.File)
-			const changeFileLog = new LogItem.ChangeFileLog(artifact)
-			logs.push(changeFileLog)
-			changeFileLog.output2console()
+			const saveFileLog = new LogItem.SaveFileLog(artifact)
+			logs.push(saveFileLog)
+			saveFileLog.output2console()
         })
 
         // 监听文件创建事件
@@ -86,18 +125,12 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
-	console.log("In deactivate()")
-	
-	// animals.push(new Animal("Generic 啦啦啦啦啦 Animal"))
-	// animals.push(new Snake("Sammy the Snake"))
-	// animals.push(new Horse("Tommy the Horse"))
+	let logsJson = JSON.stringify(logs, null, 2)
 
-	// const animalsJson = serializeItem(animals)
-
-	// const baseDirectory = '/Users/suyunhe/virtualme-demo/' 
-	// const fileName = 'output.json' 
-	// const filePath = path.join(baseDirectory, fileName)
-	// fs.writeFileSync(filePath, animalsJson, 'utf8')
+	const baseDirectory = '/Users/suyunhe/virtualme-demo/' 
+	const fileName = startTime + ".json" 
+	const filePath = path.join(baseDirectory, fileName)
+	fs.writeFileSync(filePath, logsJson, 'utf8')
 }
 
 /**
@@ -125,6 +158,32 @@ function getFormattedTime() {
   
 	// 组合成最终的字符串
 	const formattedTime = `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}.${formattedMilliseconds}`
+	return formattedTime
+}
+
+/**
+ * 获取格式化的当前时间字符串，包括年月日时分秒。
+ * @returns {string} 格式化的当前时间。
+ */
+function getFormattedTime1() {
+	const now = new Date()
+	// 获取年月日小时分钟秒和毫秒
+	const year = now.getFullYear()
+	const month = now.getMonth() + 1 // getMonth() 返回的月份从0开始，所以需要加1
+	const day = now.getDate()
+	const hours = now.getHours()
+	const minutes = now.getMinutes()
+	const seconds = now.getSeconds()
+  
+	// 格式化月份、日期、小时、分钟、秒和毫秒，不足两位数的前面补零
+	const formattedMonth = month.toString().padStart(2, '0')
+	const formattedDay = day.toString().padStart(2, '0')
+	const formattedHours = hours.toString().padStart(2, '0')
+	const formattedMinutes = minutes.toString().padStart(2, '0')
+	const formattedSeconds = seconds.toString().padStart(2, '0')
+  
+	// 组合成最终的字符串
+	const formattedTime = `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`
 	return formattedTime
 }
 
@@ -234,20 +293,38 @@ function getSymbolKindDescription(kind: vscode.SymbolKind): LogItem.ArtiFactType
 }
 
 /**
- * 将类及其子类实例的数组序列化为JSON字符串。
- * @param items 类及其子类实例的数组。
- * @returns 序列化后的JSON字符串，其中每个对象都以简单的键值对形式表示。
+ * 分析文本更改事件并记录更改类型。
+ * @param event 文本更改事件。
  */
-// function serializeItem(items: Animal[]): string {
-//     return JSON.stringify(items, (key, value) => {
-//         if (value instanceof Animal) {
-//             return {
-//                 name: value.name,
-//                 type: value.constructor.name,
-//             }
-//         }
-//         return value
-//     }, 2)
-// }
+function analyzeTextEdit(event: vscode.TextDocumentChangeEvent): LogItem.ChangeType {
+	const originalText = event.document.getText()
+    for (const change of event.contentChanges) {
+        const { text, range, rangeOffset, rangeLength } = change
+		console.log(text)
+		console.log(range)
+		console.log(rangeOffset)
+		console.log(rangeLength)
+		
+		if (event.reason === vscode.TextDocumentChangeReason.Undo) {
+			console.log('撤销操作')
+			return LogItem.ChangeType.Undo
+		} else if (event.reason === vscode.TextDocumentChangeReason.Redo) {
+			console.log('重做操作')
+			return LogItem.ChangeType.Redo
+		} else {
+			if(text.length === 0) {
+				console.log('删除代码')
+				return LogItem.ChangeType.Delete
+			} else if (event.document.getText(range).length === 0) {
+				console.log(`新增代码: ${text}, 位于第 ${range.start.line + 1} 行`)
+				return LogItem.ChangeType.Add
+			} else {
+				console.log('修改代码')
+				return LogItem.ChangeType.Edit
+			}
+		}    
+    }
+	return LogItem.ChangeType.Unknown
+}
 
 

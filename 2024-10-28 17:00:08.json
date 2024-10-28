@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-10-28 17:00:08.814",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    }
+  }
+]

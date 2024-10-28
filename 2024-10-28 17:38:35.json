@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-10-28 17:38:39.937",
+    "eventType": "Open text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/.vscode/settings.json",
+      "type": "File"
+    }
+  },
+  {
+    "id": 2,
+    "timeStamp": "2024-10-28 17:38:39.941",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/.vscode/settings.json",
+      "type": "File",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/.vscode/settings.json",
+          "type": "File"
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "timeStamp": "2024-10-28 17:38:39.977",
+    "eventType": "Close text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/.vscode/settings.json",
+      "type": "File"
+    }
+  },
+  {
+    "id": 4,
+    "timeStamp": "2024-10-28 17:38:40.020",
+    "eventType": "Change a file",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/.vscode/settings.json",
+      "type": "File"
+    }
+  },
+  {
+    "id": 5,
+    "timeStamp": "2024-10-28 17:38:40.020",
+    "eventType": "Change a file",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/.vscode/settings.json",
+      "type": "File"
+    }
+  },
+  {
+    "id": 6,
+    "timeStamp": "2024-10-28 17:38:40.021",
+    "eventType": "Change a file",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/.vscode/settings.json",
+      "type": "File"
+    }
+  },
+  {
+    "id": 7,
+    "timeStamp": "2024-10-28 17:38:41.112",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "File",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        }
+      ]
+    }
+  }
+]

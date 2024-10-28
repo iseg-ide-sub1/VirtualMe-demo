@@ -1,0 +1,156 @@
+[
+  {
+    "timeStamp": "2024-10-27 13:45:37.046",
+    "eventType": "Open text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/input1.txt",
+      "type": "File"
+    }
+  },
+  {
+    "timeStamp": "2024-10-27 13:45:37.835",
+    "eventType": "Open text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/input3.txt",
+      "type": "File"
+    }
+  },
+  {
+    "timeStamp": "2024-10-27 13:45:39.134",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/input3.txt",
+      "type": "Unknown",
+      "hierarchy": []
+    }
+  },
+  {
+    "timeStamp": "2024-10-27 13:45:39.262",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/input3.txt",
+      "type": "Unknown",
+      "hierarchy": []
+    }
+  },
+  {
+    "timeStamp": "2024-10-27 13:45:40.166",
+    "eventType": "Change a file",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/input3.txt",
+      "type": "File"
+    }
+  },
+  {
+    "timeStamp": "2024-10-27 13:45:41.922",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/input1.txt",
+      "type": "Unknown",
+      "hierarchy": []
+    }
+  },
+  {
+    "timeStamp": "2024-10-27 13:45:42.764",
+    "eventType": "Change a file",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/input1.txt",
+      "type": "File"
+    }
+  },
+  {
+    "timeStamp": "2024-10-27 13:45:43.594",
+    "eventType": "Open text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/mpi_odd_even.c",
+      "type": "File"
+    }
+  },
+  {
+    "timeStamp": "2024-10-27 13:45:47.819",
+    "eventType": "Open text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "File"
+    }
+  },
+  {
+    "timeStamp": "2024-10-27 13:45:52.383",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "Unknown",
+      "hierarchy": []
+    }
+  },
+  {
+    "timeStamp": "2024-10-27 13:45:52.384",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "Unknown",
+      "hierarchy": []
+    }
+  },
+  {
+    "timeStamp": "2024-10-27 13:45:52.385",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "Unknown",
+      "hierarchy": []
+    }
+  },
+  {
+    "timeStamp": "2024-10-27 13:45:52.385",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "timeStamp": "2024-10-27 13:45:53.067",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "setInnerData(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "timeStamp": "2024-10-27 13:45:53.806",
+    "eventType": "Change a file",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "File"
+    }
+  },
+  {
+    "timeStamp": "2024-10-27 13:45:54.864",
+    "eventType": "Close text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "File"
+    }
+  }
+]

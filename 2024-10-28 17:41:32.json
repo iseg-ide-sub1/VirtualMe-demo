@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-10-28 17:41:34.013",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "File",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "timeStamp": "2024-10-28 17:42:12.419",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "File",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        }
+      ]
+    }
+  }
+]
