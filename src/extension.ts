@@ -2,9 +2,13 @@ import * as vscode from 'vscode'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as LogItem from './log-item'
+import { CodeContextAnalyzer } from './analyzers/code-context-analyzer'
 
 let logs: LogItem.LogItem[] = []
 let startTime = ""
+
+// 添加日志输出
+let outputChannel: vscode.OutputChannel;
 
 export function activate(context: vscode.ExtensionContext) {
 	startTime = getFormattedTime1()
@@ -122,6 +126,39 @@ export function activate(context: vscode.ExtensionContext) {
 	} else {
 		vscode.window.showInformationMessage('No workspace folders are open.')
 	}
+
+	const analyzer = new CodeContextAnalyzer();
+
+	// 创建输出通道
+	outputChannel = vscode.window.createOutputChannel("代码分析器");
+	
+	context.subscriptions.push(
+		vscode.workspace.onDidChangeTextDocument(async event => {
+			const document = event.document;
+			
+			for (const change of event.contentChanges) {
+				try {
+					const context = await analyzer.getContext(
+						document,
+						change.range.start
+					);
+
+					// 输出日志
+					outputChannel.appendLine('---编辑事件---');
+					outputChannel.appendLine(`文件: ${context.uri}`);
+					outputChannel.appendLine(`位置: ${context.position.line}:${context.position.character}`);
+					outputChannel.appendLine(`作用域: ${context.scope}`);
+					outputChannel.appendLine(`当前行: ${context.currentLine}`);
+					outputChannel.appendLine('-------------\n');
+				} catch (error) {
+					outputChannel.appendLine(`错误: ${error}`);
+				}
+			}
+		})
+	);
+
+	// 显示输出通道
+	outputChannel.show();
 }
 
 export function deactivate() {
