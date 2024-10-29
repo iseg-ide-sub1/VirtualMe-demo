@@ -1,22 +1,36 @@
 import exp from "constants"
 
 enum EventType {
+    /** 打开文件 */
     OpenTextDocument = "Open text document",
+    /** 关闭文件 */
     CloseTextDocument = "Close text document",
+    /** 切换文件 */
     ChangeTextDocument = "Change text document",
+    /** 添加文件内容 */
     AddTextDocument = "Add text document",
+    /** 删除文件内容 */
     DeleteTextDocument = "Delete text document",
+    /** 修改文件内容 */
     EditTextDocument = "Edit text document",
+    /** Redo文件内容 */
     RedoTextDocument = "Redo text document",
+    /** Undo文件内容 */
     UndoTextDocument = "Undo text document",
+    /** 新建文件 */
     CreateFile = "Create file",
+    /** 删除文件 */
     DeleteFile = "Delete file",
+    /** 保存文件 */
     SaveFile = "Save file",
+    /** 选中文本 */
     SelectText = "Select text",
+    /** 打开终端 */
     OpenTerminal = "Open terminal",
+    /** 关闭终端 */
     CloseTerminal = "Close terminal",
+    /** 切换终端 */
     ChangeActiveTerminal = "Change active terminal",
-
 }
 
 export enum ArtiFactType {
