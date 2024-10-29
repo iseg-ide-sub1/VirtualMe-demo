@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-10-29 12:30:08.662",
+    "eventType": "Open text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "File"
+    }
+  },
+  {
+    "id": 2,
+    "timeStamp": "2024-10-29 12:30:08.668",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "File"
+    }
+  }
+]

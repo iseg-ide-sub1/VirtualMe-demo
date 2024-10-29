@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-10-29 15:44:39.958",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    },
+    "detail": {}
+  },
+  {
+    "id": 2,
+    "timeStamp": "2024-10-29 15:44:40.107",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    },
+    "detail": {}
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-10-29 16:12:03.054",
+    "eventType": "Change active terminal",
+    "artifact": {
+      "name": "",
+      "type": "Terminal"
+    },
+    "detail": {}
+  },
+  {
+    "id": 2,
+    "timeStamp": "2024-10-29 16:12:03.112",
+    "eventType": "Open terminal",
+    "artifact": {
+      "name": "",
+      "type": "Terminal"
+    },
+    "detail": {
+      "processId": 56720
+    }
+  }
+]

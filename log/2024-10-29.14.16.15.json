@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-10-29 14:16:17.288",
+    "eventType": "Open terminal",
+    "artifact": {
+      "name": "",
+      "type": "Terminal"
+    }
+  },
+  {
+    "id": 2,
+    "timeStamp": "2024-10-29 14:16:20.938",
+    "eventType": "Close terminal",
+    "artifact": {
+      "name": "zsh",
+      "type": "Terminal"
+    }
+  }
+]

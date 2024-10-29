@@ -1,14 +1,22 @@
+import exp from "constants"
+
 enum EventType {
     OpenTextDocument = "Open text document",
     CloseTextDocument = "Close text document",
+    ChangeTextDocument = "Change text document",
     AddTextDocument = "Add text document",
     DeleteTextDocument = "Delete text document",
     EditTextDocument = "Edit text document",
     RedoTextDocument = "Redo text document",
     UndoTextDocument = "Undo text document",
-    CreateFile = "Create a file",
-    DeleteFile = "Delete a file",
-    SaveFile = "Save a file"
+    CreateFile = "Create file",
+    DeleteFile = "Delete file",
+    SaveFile = "Save file",
+    SelectText = "Select text",
+    OpenTerminal = "Open terminal",
+    CloseTerminal = "Close terminal",
+    ChangeActiveTerminal = "Change active terminal",
+
 }
 
 export enum ArtiFactType {
@@ -38,6 +46,7 @@ export enum ArtiFactType {
 		Event = "Event",
 		Operator = "Operator",
 		TypeParameter = "TypeParameter",
+        Terminal = "Terminal", // ?
 		Unknown = "Unknown"
 }
 
@@ -62,13 +71,13 @@ export class ArtiFact {
     }
 
     toString() : string {
-        var ret = ""
+        let ret = ""
         ret += "    (1) Name: " + this.name + "\n"
         ret += "    (2) Type: " + this.type + "\n"
         if (this.hierarchy) {
             ret += "    (3) Hierarchy: \n"
-            var retract = "    "
-            for (var h of this.hierarchy) {
+            let retract = "    "
+            for (let h of this.hierarchy) {
                 retract += "  "
                 ret += retract + "- " + h.name + "(" + h.type + ")" + "\n"
             }
@@ -83,19 +92,54 @@ export class LogItem {
     timeStamp: string
     eventType: EventType
     artifact: ArtiFact
+    detail?: Map<string, any>
 
-    constructor(eventType: EventType, artifact: ArtiFact) {
+    constructor(eventType: EventType, artifact: ArtiFact, detail?: Map<string, any>) {
         this.id = LogItem.#nextId++
         this.timeStamp = getFormattedTime()
         this.eventType = eventType
         this.artifact = artifact
+        this.detail = detail
     }
 
-    output2console(): void {
-        const output = this.timeStamp + "\n"
+    toString() : string {
+        let ret = ""
+        ret = "No." + this.id + "  " + this.timeStamp + "\n"
             + "  1. EventType: " + this.eventType + "\n"
             + "  2. Artifact: \n" + this.artifact
-        console.log(output)
+        if (this.detail) {
+            ret += "  3. Detail: \n"
+            let idx : number = 1
+            for (let [key, value] of this.detail) {
+                ret += "    (" + idx + ") " + key + ": " + value + "\n"
+                idx ++
+            }
+        }
+        return ret
+    }
+
+    toJSON() {
+        const baseObject = {
+            id: this.id,
+            timeStamp: this.timeStamp,
+            eventType: this.eventType,
+            artifact: this.artifact,
+        }
+        if (!this.detail) {
+            return {
+                ...baseObject,
+                detail: {}
+            }
+        } else {
+            const detailObject: { [key: string]: any } = {}
+            for (const [key, value] of this.detail) {
+                detailObject[key] = value
+            }
+            return {
+                ...baseObject,
+                detail: detailObject
+            }
+        }
     }
 }
 
@@ -111,20 +155,36 @@ export class CloseTextDocumentLog extends LogItem {
     }
 }
 
-export class AddTextDocumentLog extends LogItem {
+export class ChangeActiveTextDocumentLog extends LogItem {
     constructor(artifact: ArtiFact) {
-        super(EventType.AddTextDocument, artifact)
+        super(EventType.ChangeTextDocument, artifact)
+    }
+}
+
+export class AddTextDocumentLog extends LogItem {
+    constructor(artifact: ArtiFact, addContentLength: number, addContent: string) {
+        let detail = new Map<string, any>()
+        detail.set("addContentLength", addContentLength)
+        detail.set("addContent", addContent)
+        super(EventType.AddTextDocument, artifact, detail)
     }
 }
 
 export class DeleteTextDocumentLog extends LogItem {
-    constructor(artifact: ArtiFact) {
-        super(EventType.DeleteTextDocument, artifact)
+    constructor(artifact: ArtiFact, deleteContentLength: number, deleteContent: string) {
+        let detail = new Map<string, any>()
+        detail.set("deleteContentLength", deleteContentLength)
+        detail.set("deleteContent", deleteContent)
+        super(EventType.DeleteTextDocument, artifact, detail)
     }
 }
 
 export class EditTextDocumentLog extends LogItem {
-    constructor(artifact: ArtiFact) {
+    constructor(artifact: ArtiFact, contentLengthChange: number, oldContent: string, newContent: string) {
+        let detail = new Map<string, any>()
+        detail.set("contentLengthChange", contentLengthChange)
+        detail.set("oldContent", oldContent)
+        detail.set("newContent", newContent)
         super(EventType.EditTextDocument, artifact)
     }
 }
@@ -159,9 +219,36 @@ export class SaveFileLog extends LogItem {
     }
 }
 
+export class SelectTextLog extends LogItem {
+    constructor(artifact: ArtiFact) {
+        super(EventType.SelectText, artifact)
+    }
+}
 
 
+export class OpenTerminalLog extends LogItem {
+    constructor(artifact: ArtiFact, processId: number) {
+        let detail = new Map<string, any>()
+        detail.set("processId", processId)
+        super(EventType.OpenTerminal, artifact, detail)
+    }
+}
 
+export class CloseTerminalLog extends LogItem {
+    constructor(artifact: ArtiFact, processId: number) {
+        let detail = new Map<string, any>()
+        detail.set("processId", processId)
+        super(EventType.CloseTerminal, artifact, detail)
+    }
+}
+
+export class ChangeActiveTerminalLog extends LogItem {
+    constructor(artifact: ArtiFact, processId: number) {
+        let detail = new Map<string, any>()
+        detail.set("processId", processId)
+        super(EventType.ChangeActiveTerminal, artifact, detail)
+    }
+}
 
 
 /**
