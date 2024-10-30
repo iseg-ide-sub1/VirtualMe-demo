@@ -65,33 +65,60 @@ export function activate(context: vscode.ExtensionContext) {
             console.log("No change position found.")
             return
         }
-		const artifact = await getArtifactFromSymbolHierarchy(event.document, changePosition)
         
-		if (changeType === LogItem.ChangeType.Add) {
-			const addContentLength = event.contentChanges[0].text.length
-			const addContent = event.contentChanges[0].text
-			let addTextDocumentLog = new LogItem.AddTextDocumentLog(artifact, addContentLength, addContent)
-			logs.push(addTextDocumentLog)
-			console.log(addTextDocumentLog.toString())
-		} else if (changeType === LogItem.ChangeType.Delete) {
-			// let deleteTextDocumentLog = new LogItem.DeleteTextDocumentLog(artifact)
-			// logs.push(deleteTextDocumentLog)
-			// console.log(deleteTextDocumentLog.toString())
-		} else if (changeType === LogItem.ChangeType.Edit) {
-			// let editTextDocumentLog = new LogItem.EditTextDocumentLog(artifact)
-			// logs.push(editTextDocumentLog)
-			// console.log(editTextDocumentLog.toString())
-		} else if (changeType === LogItem.ChangeType.Redo) {
-			let redoTextDocumentLog = new LogItem.RedoTextDocumentLog(artifact)
-			logs.push(redoTextDocumentLog)
-			console.log(redoTextDocumentLog.toString())
-		} else if (changeType === LogItem.ChangeType.Undo) {
-			let undoTextDocumentLog = new LogItem.UndoTextDocumentLog(artifact)
-			logs.push(undoTextDocumentLog)
-			console.log(undoTextDocumentLog.toString())
-		}
-		
-		// console.log(`          reason: ${event.reason}`)
+        const change = event.contentChanges[0]
+        const oldContent = event.document.getText(change.range)
+        const newContent = change.text
+        
+        // 创建 artifact 并设置变更信息
+        const artifact = await getArtifactFromSymbolHierarchy(event.document, changePosition)
+        
+        // 设置变更信息
+        if (!artifact.context) {
+            artifact.context = {}
+        }
+        
+        artifact.context.change = {
+            type: changeType,
+            content: {
+                before: oldContent,
+                after: newContent
+            },
+            length: {
+                before: oldContent.length,
+                after: newContent.length
+            }
+        }
+        
+        // 根据变更类型创建不同的日志对象
+        let logItem: LogItem.LogItem
+        
+        if (changeType === LogItem.ChangeType.Add) {
+            logItem = new LogItem.AddTextDocumentLog(
+                artifact,
+                newContent.length,
+                newContent
+            )
+        } else if (changeType === LogItem.ChangeType.Delete) {
+            logItem = new LogItem.DeleteTextDocumentLog(
+                artifact,
+                oldContent.length,
+                oldContent
+            )
+        } else if (changeType === LogItem.ChangeType.Edit) {
+            logItem = new LogItem.EditTextDocumentLog(
+                artifact,
+                oldContent,
+                newContent
+            )
+        } else if (changeType === LogItem.ChangeType.Redo) {
+            logItem = new LogItem.RedoTextDocumentLog(artifact)
+        } else {
+            logItem = new LogItem.UndoTextDocumentLog(artifact)
+        }
+        
+        logs.push(logItem)
+        console.log(logItem.toString())
 	})
 	context.subscriptions.push(changeTextDocumentWatcher)
 
@@ -163,26 +190,34 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
-    // 获取插件项目的根目录
-    const extensionPath = path.join(__dirname, '..');  // __dirname 是 dist 文件夹
-    console.log(extensionPath)
-    const logDirectory = path.join(extensionPath, 'log');
-    console.log(logDirectory)
-    // 确保 log 目录存在
+    const extensionPath = path.join(__dirname, '..')
+    const logDirectory = path.join(extensionPath, 'log')
+    
     if (!fs.existsSync(logDirectory)) {
-        fs.mkdirSync(logDirectory, { recursive: true });
+        fs.mkdirSync(logDirectory, { recursive: true })
     }
     
-    // 创建日志文件
-    const fileName = startTime + '.json';
-    const filePath = path.join(logDirectory, fileName);
+    const fileName = startTime + '.json'
+    const filePath = path.join(logDirectory, fileName)
     
     try {
-        const logsJson = JSON.stringify(logs, null, 2);
-        fs.writeFileSync(filePath, logsJson, 'utf8');
-        console.log(`Log file saved to: ${filePath}`);
+        // 使用 JSON.stringify 的第三个参数来美化输出
+        const logsJson = JSON.stringify(logs, (key, value) => {
+            if (value instanceof Map) {
+                // 将 Map 转换为普通对象
+                const obj: { [key: string]: any } = {}
+                value.forEach((v, k) => {
+                    obj[k] = v
+                })
+                return obj
+            }
+            return value
+        }, 2)
+        
+        fs.writeFileSync(filePath, logsJson, 'utf8')
+        console.log(`Log file saved to: ${filePath}`)
     } catch (error) {
-        console.error('Error saving log file:', error);
+        console.error('Error saving log file:', error)
     }
 }
 
@@ -253,15 +288,56 @@ async function getArtifactFromSymbolHierarchy(document: vscode.TextDocument, pos
     let name: string = document.uri.toString()
     let type: LogItem.ArtiFactType = LogItem.ArtiFactType.File
 
-    // 将文档 URI 作为最顶层的 Artifact 添加到层级中
-    hierarchys.push(new LogItem.ArtiFact(document.uri.toString(), LogItem.ArtiFactType.File))
+    // 创建简化的作用域上下文结构
+    let scopeContext = {
+        position: {
+            line: position.line + 1,
+            character: position.character + 1
+        },
+        scope: {
+            file: {
+                name: path.basename(document.uri.fsPath),
+                path: document.uri.fsPath
+            },
+            class: undefined as { name: string; } | undefined,
+            method: undefined as { name: string; } | undefined
+        }
+    }
+
+    // 将文档作为最顶层的 Artifact
+    const fileArtifact = new LogItem.ArtiFact(
+        document.uri.toString(), 
+        LogItem.ArtiFactType.File,
+        undefined,
+        scopeContext
+    )
+    hierarchys.push(fileArtifact)
 
     if (symbolHierarchy && symbolHierarchy.length > 0) {
         for (const symbol of symbolHierarchy) {
-            const h = new LogItem.ArtiFact(symbol.name, getSymbolKindDescription(symbol.kind))
+            const symbolContext = { ...scopeContext }
+            
+            // 只记录符号名称
+            if (symbol.kind === vscode.SymbolKind.Class) {
+                symbolContext.scope.class = {
+                    name: symbol.name
+                }
+            } else if (symbol.kind === vscode.SymbolKind.Method || 
+                      symbol.kind === vscode.SymbolKind.Function) {
+                symbolContext.scope.method = {
+                    name: symbol.name
+                }
+            }
+
+            const h = new LogItem.ArtiFact(
+                symbol.name, 
+                getSymbolKindDescription(symbol.kind),
+                undefined,
+                symbolContext
+            )
             hierarchys.push(h)
         }
-        // 如果存在层级，则使用最后一个符号的名称和类型
+        
         name = hierarchys[hierarchys.length - 1].name
         type = hierarchys[hierarchys.length - 1].type
     }
