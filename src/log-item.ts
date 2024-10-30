@@ -20,34 +20,34 @@ enum EventType {
 }
 
 export enum ArtiFactType {
-		File = "File",
-		Module = "Module",
-		Namespace = "Namespace",
-		Package = "Package",
-		Class = "Class",
-		Method = "Method",
-		Property = "Property",
-		Field = "Field",
-		Constructor = "Constructor",
-		Enum = "Enum",
-		Interface = "Interface",
-		Function = "Function",
-		Variable = "Variable",
-		Constant = "Constant",
-		String = "String",
-		Number = "Number",
-		Boolean = "Boolean",
-		Array = "Array",
-		Object = "Object",
-		Key = "Key",
-		Null = "Null",
-		EnumMember = "EnumMember",
-		Struct = "Struct",
-		Event = "Event",
-		Operator = "Operator",
-		TypeParameter = "TypeParameter",
-        Terminal = "Terminal", // ?
-		Unknown = "Unknown"
+    File = "File",
+    Module = "Module",
+    Namespace = "Namespace",
+    Package = "Package",
+    Class = "Class",
+    Method = "Method",
+    Property = "Property",
+    Field = "Field",
+    Constructor = "Constructor",
+    Enum = "Enum",
+    Interface = "Interface",
+    Function = "Function",
+    Variable = "Variable",
+    Constant = "Constant",
+    String = "String",
+    Number = "Number",
+    Boolean = "Boolean",
+    Array = "Array",
+    Object = "Object",
+    Key = "Key",
+    Null = "Null",
+    EnumMember = "EnumMember",
+    Struct = "Struct",
+    Event = "Event",
+    Operator = "Operator",
+    TypeParameter = "TypeParameter",
+    Terminal = "Terminal", // ?
+    Unknown = "Unknown"
 }
 
 export enum ChangeType {
@@ -95,10 +95,19 @@ export class ArtiFact {
                     after: number;
                 };
             };
+            // 选择信息
+            selection?: {
+                text: string;
+                range: {
+                    start: { line: number; character: number };
+                    end: { line: number; character: number };
+                }
+            }
         }
-    ) {}
+    ) {
+    }
 
-    toString() : string {
+    toString(): string {
         let ret = ""
         ret += "    (1) Name: " + this.name + "\n"
         ret += "    (2) Type: " + this.type + "\n"
@@ -110,7 +119,7 @@ export class ArtiFact {
                 ret += retract + "- " + h.name + "(" + h.type + ")" + "\n"
             }
         }
-        return ret 
+        return ret
     }
 }
 
@@ -130,17 +139,17 @@ export class LogItem {
         this.detail = detail
     }
 
-    toString() : string {
+    toString(): string {
         let ret = ""
         ret = "No." + this.id + "  " + this.timeStamp + "\n"
             + "  1. EventType: " + this.eventType + "\n"
             + "  2. Artifact: \n" + this.artifact
         if (this.detail) {
             ret += "  3. Detail: \n"
-            let idx : number = 1
+            let idx: number = 1
             for (let [key, value] of this.detail) {
                 ret += "    (" + idx + ") " + key + ": " + value + "\n"
-                idx ++
+                idx++
             }
         }
         return ret
@@ -215,8 +224,8 @@ export class DeleteTextDocumentLog extends LogItem {
 
 export class EditTextDocumentLog extends LogItem {
     constructor(
-        artifact: ArtiFact, 
-        oldContent: string, 
+        artifact: ArtiFact,
+        oldContent: string,
         newContent: string
     ) {
         let detail = new Map<string, any>()

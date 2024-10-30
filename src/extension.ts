@@ -47,13 +47,28 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(changeActiveTextDocumentWatcher)
 
 	/** 用光标选择文本内容 */
+    // 仅仅移动光标，也会触发此事件
 	const selectTextWatcher = vscode.window.onDidChangeTextEditorSelection(async event => {
 		const selection = event.selections[0]
-		const start = selection.start
-		const artifact = await getArtifactFromSymbolHierarchy(event.textEditor.document, start)
-		const selectTextLog = new LogItem.SelectTextLog(artifact)
-		logs.push(selectTextLog)
-		console.log(selectTextLog.toString())
+		// 只有当真正选择了文本时才记录
+		if (!selection.isEmpty) {
+			const start = selection.start
+			const artifact = await getArtifactFromSymbolHierarchy(event.textEditor.document, start)
+			// 添加选择的文本内容到上下文
+			if (!artifact.context) {
+				artifact.context = {}
+			}
+			artifact.context.selection = {
+				text: event.textEditor.document.getText(selection),
+				range: {
+					start: { line: selection.start.line + 1, character: selection.start.character + 1 },
+					end: { line: selection.end.line + 1, character: selection.end.character + 1 }
+				}
+			}
+			const selectTextLog = new LogItem.SelectTextLog(artifact)
+			logs.push(selectTextLog)
+			console.log(selectTextLog.toString())
+		}
 	})
 	context.subscriptions.push(selectTextWatcher)
 
