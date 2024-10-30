@@ -296,39 +296,48 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.showInformationMessage('No workspace folders are open.')
 	}
 
+	/** 注册命令：保存日志 */
+	const saveLogCommand = vscode.commands.registerCommand('virtualme-demo.savelog', () => {
+		saveLogToFile()
+		vscode.window.showInformationMessage('Log file has been saved!')
+	})
+	context.subscriptions.push(saveLogCommand)
+}
 
+// 将保存日志的逻辑抽取为单独的函数，这样可以在 deactivate 和快捷键命令中复用
+function saveLogToFile() {
+	const extensionPath = path.join(__dirname, '..')
+	const logDirectory = path.join(extensionPath, 'log')
+	
+	if (!fs.existsSync(logDirectory)) {
+		fs.mkdirSync(logDirectory, { recursive: true })
+	}
+	
+	const fileName = startTime + '.json'
+	const filePath = path.join(logDirectory, fileName)
+	
+	try {
+		const logsJson = JSON.stringify(logs, (key, value) => {
+			if (value instanceof Map) {
+				const obj: { [key: string]: any } = {}
+				value.forEach((v, k) => {
+					obj[k] = v
+				})
+				return obj
+			}
+			return value
+		}, 2)
+		
+		fs.writeFileSync(filePath, logsJson, 'utf8')
+		console.log(`Log file saved to: ${filePath}`)
+	} catch (error) {
+		console.error('Error saving log file:', error)
+		vscode.window.showErrorMessage('Failed to save log file: ' + error)
+	}
 }
 
 export function deactivate() {
-    const extensionPath = path.join(__dirname, '..')
-    const logDirectory = path.join(extensionPath, 'log')
-    
-    if (!fs.existsSync(logDirectory)) {
-        fs.mkdirSync(logDirectory, { recursive: true })
-    }
-    
-    const fileName = startTime + '.json'
-    const filePath = path.join(logDirectory, fileName)
-    
-    try {
-        // 使用 JSON.stringify 的第三个参数来美化输出
-        const logsJson = JSON.stringify(logs, (key, value) => {
-            if (value instanceof Map) {
-                // 将 Map 转换为普通对象
-                const obj: { [key: string]: any } = {}
-                value.forEach((v, k) => {
-                    obj[k] = v
-                })
-                return obj
-            }
-            return value
-        }, 2)
-        
-        fs.writeFileSync(filePath, logsJson, 'utf8')
-        console.log(`Log file saved to: ${filePath}`)
-    } catch (error) {
-        console.error('Error saving log file:', error)
-    }
+	saveLogToFile()
 }
 
 /**
