@@ -6,6 +6,9 @@ import * as LogItem from './log-item'
 let logs: LogItem.LogItem[] = []
 let startTime: string = ""
 let snapshot: string = ""
+let editTimeout: NodeJS.Timeout | undefined
+let pendingChanges: vscode.TextDocumentContentChangeEvent[] = []
+let lastEditTime: number = 0
 
 export function activate(context: vscode.ExtensionContext) {
 	startTime = getFormattedTime1()
@@ -74,23 +77,117 @@ export function activate(context: vscode.ExtensionContext) {
 
 	/** 修改文件内容(新增、删除、修改、Redo、Undo) */
 	const changeTextDocumentWatcher = vscode.workspace.onDidChangeTextDocument(async (event: vscode.TextDocumentChangeEvent) => {
-        const changeType = getTextDocChangeType(event)
-		const changePosition = event.contentChanges[0]?.range.start
-        if (!changePosition) {
-            console.log("No change position found.")
+        const now = Date.now()
+        
+        // 增加合并时间窗口到1000ms
+        if (now - lastEditTime < 1000) {
+            pendingChanges.push(...event.contentChanges)
+            lastEditTime = now
             return
         }
         
-        const change = event.contentChanges[0]
-        const oldContent = event.document.getText(change.range)
-        const newContent = change.text
+        // 处理待处理的更改
+        if (pendingChanges.length > 0) {
+            pendingChanges.push(...event.contentChanges)
+            await handleMergedChanges(event.document, pendingChanges)
+            pendingChanges = []
+        } else if (event.contentChanges.length > 0) { // 只处理非空的更改
+            await handleMergedChanges(event.document, event.contentChanges)
+        }
         
-        // 创建 artifact 并设置变更信息
-        const artifact = await getArtifactFromSymbolHierarchy(event.document, changePosition)
+        lastEditTime = now
+	})
+	context.subscriptions.push(changeTextDocumentWatcher)
+
+	async function handleMergedChanges(document: vscode.TextDocument, changes: readonly vscode.TextDocumentContentChangeEvent[]) {
+        // 如果只有一个变更，直接处理
+        if (changes.length === 1) {
+            const change = changes[0];
+            const changeEvent: vscode.TextDocumentChangeEvent = {
+                document: document,
+                contentChanges: changes,
+                reason: undefined
+            };
+            await handleSingleChange(document, change, changeEvent);
+            return;
+        }
+
+        // 对于多个变更，需要考虑它们的位置关系
+        let firstChange = changes[0];
+        let lastChange = changes[changes.length - 1];
         
-        // 设置变更信息
+        // 计算完整的变更范围
+        const range = new vscode.Range(
+            firstChange.range.start,
+            lastChange.range.end
+        );
+        
+        // 获取变更前的完整内容
+        const oldContent = document.getText(range);
+        
+        // 获取变更后的完整内容
+        // 需要按照正确的顺序应用所有变更
+        let newContent = '';
+        let lastPos = firstChange.range.start;
+        
+        for (const change of changes) {
+            // 添加从上一个变更位置到当前变更位置之间的未修改内容
+            if (change.range.start.line > lastPos.line || 
+                (change.range.start.line === lastPos.line && change.range.start.character > lastPos.character)) {
+                const intermediatRange = new vscode.Range(lastPos, change.range.start);
+                newContent += document.getText(intermediatRange);
+            }
+            // 添加当前变更的新内容
+            newContent += change.text;
+            lastPos = change.range.end;
+        }
+
+        // 创建合并后的变更对象
+        const mergedChange = {
+            range: range,
+            rangeOffset: document.offsetAt(range.start),
+            rangeLength: document.offsetAt(range.end) - document.offsetAt(range.start),
+            text: newContent
+        } as vscode.TextDocumentContentChangeEvent;
+
+        const changeEvent: vscode.TextDocumentChangeEvent = {
+            document: document,
+            contentChanges: [mergedChange],
+            reason: undefined
+        };
+
+        await handleSingleChange(document, mergedChange, changeEvent);
+    }
+
+    // 处理单个变更的辅助函数
+    async function handleSingleChange(
+        document: vscode.TextDocument, 
+        change: vscode.TextDocumentContentChangeEvent,
+        changeEvent: vscode.TextDocumentChangeEvent
+    ) {
+        const changeType = getTextDocChangeType(changeEvent)
+        const changePosition = change.range.start
+        
+        // 忽略空的更改
+        if (change.text.length === 0 && change.range.isEmpty) {
+            return
+        }
+        
+        // 获取完整的上下文
+        const artifact = await getArtifactFromSymbolHierarchy(document, changePosition)
+        
+        // 确保上下文信息完整
         if (!artifact.context) {
             artifact.context = {}
+        }
+        
+        // 获取更准确的变更内容
+        const oldContent = document.getText(change.range)
+        const newContent = change.text
+        
+        // 只记录实际发生变化的内容
+        if (oldContent === newContent) {
+            return
         }
         
         artifact.context.change = {
@@ -105,37 +202,35 @@ export function activate(context: vscode.ExtensionContext) {
             }
         }
         
-        // 根据变更类型创建不同的日志对象
+        // 创建日志对象
         let logItem: LogItem.LogItem
         
-        if (changeType === LogItem.ChangeType.Add) {
+        if (changeType === LogItem.ChangeType.Add && newContent.length > 0) {
             logItem = new LogItem.AddTextDocumentLog(
                 artifact,
                 newContent.length,
                 newContent
             )
-        } else if (changeType === LogItem.ChangeType.Delete) {
+        } else if (changeType === LogItem.ChangeType.Delete && oldContent.length > 0) {
             logItem = new LogItem.DeleteTextDocumentLog(
                 artifact,
                 oldContent.length,
                 oldContent
             )
-        } else if (changeType === LogItem.ChangeType.Edit) {
+        } else if (changeType === LogItem.ChangeType.Edit && 
+                   (oldContent !== newContent)) {
             logItem = new LogItem.EditTextDocumentLog(
                 artifact,
                 oldContent,
                 newContent
             )
-        } else if (changeType === LogItem.ChangeType.Redo) {
-            logItem = new LogItem.RedoTextDocumentLog(artifact)
         } else {
-            logItem = new LogItem.UndoTextDocumentLog(artifact)
+            return // 忽略无效的变更
         }
         
         logs.push(logItem)
         console.log(logItem.toString())
-	})
-	context.subscriptions.push(changeTextDocumentWatcher)
+    }
 
 	/** 新建终端 */
 	const openTerminalWatcher = vscode.window.onDidOpenTerminal(async terminal => {
