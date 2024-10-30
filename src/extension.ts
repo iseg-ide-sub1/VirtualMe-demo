@@ -163,14 +163,27 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
-	const logsJson = JSON.stringify(logs, null, 2)
-	const baseDirectory = "/Users/suyunhe/virtualme-demo/log/"
-	const fileName = startTime + ".json" 
-	const filePath = path.join(baseDirectory, fileName)
-	fs.writeFileSync(filePath, logsJson, 'utf8')
-
-	// 对logs的日志进行处理
-
+    // 获取插件项目的根目录
+    const extensionPath = path.join(__dirname, '..');  // __dirname 是 dist 文件夹
+    console.log(extensionPath)
+    const logDirectory = path.join(extensionPath, 'log');
+    console.log(logDirectory)
+    // 确保 log 目录存在
+    if (!fs.existsSync(logDirectory)) {
+        fs.mkdirSync(logDirectory, { recursive: true });
+    }
+    
+    // 创建日志文件
+    const fileName = startTime + '.json';
+    const filePath = path.join(logDirectory, fileName);
+    
+    try {
+        const logsJson = JSON.stringify(logs, null, 2);
+        fs.writeFileSync(filePath, logsJson, 'utf8');
+        console.log(`Log file saved to: ${filePath}`);
+    } catch (error) {
+        console.error('Error saving log file:', error);
+    }
 }
 
 /**
