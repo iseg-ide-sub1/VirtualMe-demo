@@ -34,34 +34,34 @@ enum EventType {
 }
 
 export enum ArtiFactType {
-		File = "File",
-		Module = "Module",
-		Namespace = "Namespace",
-		Package = "Package",
-		Class = "Class",
-		Method = "Method",
-		Property = "Property",
-		Field = "Field",
-		Constructor = "Constructor",
-		Enum = "Enum",
-		Interface = "Interface",
-		Function = "Function",
-		Variable = "Variable",
-		Constant = "Constant",
-		String = "String",
-		Number = "Number",
-		Boolean = "Boolean",
-		Array = "Array",
-		Object = "Object",
-		Key = "Key",
-		Null = "Null",
-		EnumMember = "EnumMember",
-		Struct = "Struct",
-		Event = "Event",
-		Operator = "Operator",
-		TypeParameter = "TypeParameter",
-        Terminal = "Terminal", // ?
-		Unknown = "Unknown"
+    File = "File",
+    Module = "Module",
+    Namespace = "Namespace",
+    Package = "Package",
+    Class = "Class",
+    Method = "Method",
+    Property = "Property",
+    Field = "Field",
+    Constructor = "Constructor",
+    Enum = "Enum",
+    Interface = "Interface",
+    Function = "Function",
+    Variable = "Variable",
+    Constant = "Constant",
+    String = "String",
+    Number = "Number",
+    Boolean = "Boolean",
+    Array = "Array",
+    Object = "Object",
+    Key = "Key",
+    Null = "Null",
+    EnumMember = "EnumMember",
+    Struct = "Struct",
+    Event = "Event",
+    Operator = "Operator",
+    TypeParameter = "TypeParameter",
+    Terminal = "Terminal", // ?
+    Unknown = "Unknown"
 }
 
 export enum ChangeType {
@@ -74,29 +74,66 @@ export enum ChangeType {
 }
 
 export class ArtiFact {
-    name: string
-    type: ArtiFactType
-    hierarchy?: ArtiFact[]
-
-    constructor(name: string, type: ArtiFactType, hierarchy?: ArtiFact[]) {
-        this.name = name
-        this.type = type
-        this.hierarchy = hierarchy
+    constructor(
+        public name: string,
+        public type: ArtiFactType,
+        public hierarchys?: ArtiFact[],
+        public context?: {
+            // 编辑位置
+            position?: {
+                line: number;
+                character: number;
+            };
+            // 简化的作用域信息
+            scope?: {
+                file?: {
+                    name: string;
+                    path: string;
+                };
+                class?: {
+                    name: string;
+                };
+                method?: {
+                    name: string;
+                };
+            };
+            // 代码变更信息
+            change?: {
+                type: ChangeType;
+                content: {
+                    before: string;
+                    after: string;
+                };
+                length: {
+                    before: number;
+                    after: number;
+                };
+            };
+            // 选择信息
+            selection?: {
+                text: string;
+                range: {
+                    start: { line: number; character: number };
+                    end: { line: number; character: number };
+                }
+            }
+        }
+    ) {
     }
 
-    toString() : string {
+    toString(): string {
         let ret = ""
         ret += "    (1) Name: " + this.name + "\n"
         ret += "    (2) Type: " + this.type + "\n"
-        if (this.hierarchy) {
+        if (this.hierarchys) {
             ret += "    (3) Hierarchy: \n"
             let retract = "    "
-            for (let h of this.hierarchy) {
+            for (let h of this.hierarchys) {
                 retract += "  "
                 ret += retract + "- " + h.name + "(" + h.type + ")" + "\n"
             }
         }
-        return ret 
+        return ret
     }
 }
 
@@ -116,17 +153,17 @@ export class LogItem {
         this.detail = detail
     }
 
-    toString() : string {
+    toString(): string {
         let ret = ""
         ret = "No." + this.id + "  " + this.timeStamp + "\n"
             + "  1. EventType: " + this.eventType + "\n"
             + "  2. Artifact: \n" + this.artifact
         if (this.detail) {
             ret += "  3. Detail: \n"
-            let idx : number = 1
+            let idx: number = 1
             for (let [key, value] of this.detail) {
                 ret += "    (" + idx + ") " + key + ": " + value + "\n"
-                idx ++
+                idx++
             }
         }
         return ret
@@ -137,8 +174,14 @@ export class LogItem {
             id: this.id,
             timeStamp: this.timeStamp,
             eventType: this.eventType,
-            artifact: this.artifact,
+            artifact: {
+                name: this.artifact.name,
+                type: this.artifact.type,
+                hierarchys: this.artifact.hierarchys,
+                context: this.artifact.context
+            }
         }
+
         if (!this.detail) {
             return {
                 ...baseObject,
@@ -194,12 +237,16 @@ export class DeleteTextDocumentLog extends LogItem {
 }
 
 export class EditTextDocumentLog extends LogItem {
-    constructor(artifact: ArtiFact, contentLengthChange: number, oldContent: string, newContent: string) {
+    constructor(
+        artifact: ArtiFact,
+        oldContent: string,
+        newContent: string
+    ) {
         let detail = new Map<string, any>()
-        detail.set("contentLengthChange", contentLengthChange)
         detail.set("oldContent", oldContent)
         detail.set("newContent", newContent)
-        super(EventType.EditTextDocument, artifact)
+        detail.set("contentLengthChange", newContent.length - oldContent.length)
+        super(EventType.EditTextDocument, artifact, detail)
     }
 }
 

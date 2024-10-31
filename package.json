@@ -19,6 +19,18 @@
       {
         "command": "virtualme-demo.virtualme",
         "title": "VirtualME Demo"
+      },
+      {
+        "command": "virtualme-demo.savelog",
+        "title": "Save VirtualME Log"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "virtualme-demo.savelog",
+        "key": "alt+s",
+        "mac": "alt+s",
+        "when": "editorTextFocus"
       }
     ]
   },

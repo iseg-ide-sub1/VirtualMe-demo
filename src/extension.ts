@@ -6,6 +6,9 @@ import * as LogItem from './log-item'
 let logs: LogItem.LogItem[] = []
 let startTime: string = ""
 let snapshot: string = ""
+let editTimeout: NodeJS.Timeout | undefined
+let pendingChanges: vscode.TextDocumentContentChangeEvent[] = []
+let lastEditTime: number = 0
 
 export function activate(context: vscode.ExtensionContext) {
 	startTime = getFormattedTime1()
@@ -47,53 +50,187 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(changeActiveTextDocumentWatcher)
 
 	/** 用光标选择文本内容 */
+    // 仅仅移动光标，也会触发此事件
 	const selectTextWatcher = vscode.window.onDidChangeTextEditorSelection(async event => {
 		const selection = event.selections[0]
-		const start = selection.start
-		const artifact = await getArtifactFromSymbolHierarchy(event.textEditor.document, start)
-		const selectTextLog = new LogItem.SelectTextLog(artifact)
-		logs.push(selectTextLog)
-		console.log(selectTextLog.toString())
+		// 只有当真正选择了文本时才记录
+		if (!selection.isEmpty) {
+			const start = selection.start
+			const artifact = await getArtifactFromSymbolHierarchy(event.textEditor.document, start)
+			// 添加选择的文本内容到上下文
+			if (!artifact.context) {
+				artifact.context = {}
+			}
+			artifact.context.selection = {
+				text: event.textEditor.document.getText(selection),
+				range: {
+					start: { line: selection.start.line + 1, character: selection.start.character + 1 },
+					end: { line: selection.end.line + 1, character: selection.end.character + 1 }
+				}
+			}
+			const selectTextLog = new LogItem.SelectTextLog(artifact)
+			logs.push(selectTextLog)
+			console.log(selectTextLog.toString())
+		}
 	})
 	context.subscriptions.push(selectTextWatcher)
 
 	/** 修改文件内容(新增、删除、修改、Redo、Undo) */
 	const changeTextDocumentWatcher = vscode.workspace.onDidChangeTextDocument(async (event: vscode.TextDocumentChangeEvent) => {
-        const changeType = getTextDocChangeType(event)
-		const changePosition = event.contentChanges[0]?.range.start
-        if (!changePosition) {
-            console.log("No change position found.")
+        const now = Date.now()
+        
+        // 增加合并时间窗口到1000ms
+        if (now - lastEditTime < 1000) {
+            pendingChanges.push(...event.contentChanges)
+            lastEditTime = now
             return
         }
-		const artifact = await getArtifactFromSymbolHierarchy(event.document, changePosition)
         
-		if (changeType === LogItem.ChangeType.Add) {
-			const addContentLength = event.contentChanges[0].text.length
-			const addContent = event.contentChanges[0].text
-			let addTextDocumentLog = new LogItem.AddTextDocumentLog(artifact, addContentLength, addContent)
-			logs.push(addTextDocumentLog)
-			console.log(addTextDocumentLog.toString())
-		} else if (changeType === LogItem.ChangeType.Delete) {
-			// let deleteTextDocumentLog = new LogItem.DeleteTextDocumentLog(artifact)
-			// logs.push(deleteTextDocumentLog)
-			// console.log(deleteTextDocumentLog.toString())
-		} else if (changeType === LogItem.ChangeType.Edit) {
-			// let editTextDocumentLog = new LogItem.EditTextDocumentLog(artifact)
-			// logs.push(editTextDocumentLog)
-			// console.log(editTextDocumentLog.toString())
-		} else if (changeType === LogItem.ChangeType.Redo) {
-			let redoTextDocumentLog = new LogItem.RedoTextDocumentLog(artifact)
-			logs.push(redoTextDocumentLog)
-			console.log(redoTextDocumentLog.toString())
-		} else if (changeType === LogItem.ChangeType.Undo) {
-			let undoTextDocumentLog = new LogItem.UndoTextDocumentLog(artifact)
-			logs.push(undoTextDocumentLog)
-			console.log(undoTextDocumentLog.toString())
-		}
-		
-		// console.log(`          reason: ${event.reason}`)
+        // 处理待处理的更改
+        if (pendingChanges.length > 0) {
+            pendingChanges.push(...event.contentChanges)
+            await handleMergedChanges(event.document, pendingChanges)
+            pendingChanges = []
+        } else if (event.contentChanges.length > 0) { // 只处理非空的更改
+            await handleMergedChanges(event.document, event.contentChanges)
+        }
+        
+        lastEditTime = now
 	})
 	context.subscriptions.push(changeTextDocumentWatcher)
+
+	async function handleMergedChanges(document: vscode.TextDocument, changes: readonly vscode.TextDocumentContentChangeEvent[]) {
+        // 如果只有一个变更，直接处理
+        if (changes.length === 1) {
+            const change = changes[0];
+            const changeEvent: vscode.TextDocumentChangeEvent = {
+                document: document,
+                contentChanges: changes,
+                reason: undefined
+            };
+            await handleSingleChange(document, change, changeEvent);
+            return;
+        }
+
+        // 对于多个变更，需要考虑它们的位置关系
+        let firstChange = changes[0];
+        let lastChange = changes[changes.length - 1];
+        
+        // 计算完整的变更范围
+        const range = new vscode.Range(
+            firstChange.range.start,
+            lastChange.range.end
+        );
+        
+        // 获取变更前的完整内容
+        const oldContent = document.getText(range);
+        
+        // 获取变更后的完整内容
+        // 需要按照正确的顺序应用所有变更
+        let newContent = '';
+        let lastPos = firstChange.range.start;
+        
+        for (const change of changes) {
+            // 添加从上一个变更位置到当前变更位置之间的未修改内容
+            if (change.range.start.line > lastPos.line || 
+                (change.range.start.line === lastPos.line && change.range.start.character > lastPos.character)) {
+                const intermediatRange = new vscode.Range(lastPos, change.range.start);
+                newContent += document.getText(intermediatRange);
+            }
+            // 添加当前变更的新内容
+            newContent += change.text;
+            lastPos = change.range.end;
+        }
+
+        // 创建合并后的变更对象
+        const mergedChange = {
+            range: range,
+            rangeOffset: document.offsetAt(range.start),
+            rangeLength: document.offsetAt(range.end) - document.offsetAt(range.start),
+            text: newContent
+        } as vscode.TextDocumentContentChangeEvent;
+
+        const changeEvent: vscode.TextDocumentChangeEvent = {
+            document: document,
+            contentChanges: [mergedChange],
+            reason: undefined
+        };
+
+        await handleSingleChange(document, mergedChange, changeEvent);
+    }
+
+    // 处理单个变更的辅助函数
+    async function handleSingleChange(
+        document: vscode.TextDocument, 
+        change: vscode.TextDocumentContentChangeEvent,
+        changeEvent: vscode.TextDocumentChangeEvent
+    ) {
+        const changeType = getTextDocChangeType(changeEvent)
+        const changePosition = change.range.start
+        
+        // 忽略空的更改
+        if (change.text.length === 0 && change.range.isEmpty) {
+            return
+        }
+        
+        // 获取完整的上下文
+        const artifact = await getArtifactFromSymbolHierarchy(document, changePosition)
+        
+        // 确保上下文信息完整
+        if (!artifact.context) {
+            artifact.context = {}
+        }
+        
+        // 获取更准确的变更内容
+        const oldContent = document.getText(change.range)
+        const newContent = change.text
+        
+        // 只记录实际发生变化的内容
+        if (oldContent === newContent) {
+            return
+        }
+        
+        artifact.context.change = {
+            type: changeType,
+            content: {
+                before: oldContent,
+                after: newContent
+            },
+            length: {
+                before: oldContent.length,
+                after: newContent.length
+            }
+        }
+        
+        // 创建日志对象
+        let logItem: LogItem.LogItem
+        
+        if (changeType === LogItem.ChangeType.Add && newContent.length > 0) {
+            logItem = new LogItem.AddTextDocumentLog(
+                artifact,
+                newContent.length,
+                newContent
+            )
+        } else if (changeType === LogItem.ChangeType.Delete && oldContent.length > 0) {
+            logItem = new LogItem.DeleteTextDocumentLog(
+                artifact,
+                oldContent.length,
+                oldContent
+            )
+        } else if (changeType === LogItem.ChangeType.Edit && 
+                   (oldContent !== newContent)) {
+            logItem = new LogItem.EditTextDocumentLog(
+                artifact,
+                oldContent,
+                newContent
+            )
+        } else {
+            return // 忽略无效的变更
+        }
+        
+        logs.push(logItem)
+        console.log(logItem.toString())
+    }
 
 	/** 新建终端 */
 	const openTerminalWatcher = vscode.window.onDidOpenTerminal(async terminal => {
@@ -159,18 +296,48 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.showInformationMessage('No workspace folders are open.')
 	}
 
+	/** 注册命令：保存日志 */
+	const saveLogCommand = vscode.commands.registerCommand('virtualme-demo.savelog', () => {
+		saveLogToFile()
+		vscode.window.showInformationMessage('Log file has been saved!')
+	})
+	context.subscriptions.push(saveLogCommand)
+}
 
+// 将保存日志的逻辑抽取为单独的函数，这样可以在 deactivate 和快捷键命令中复用
+function saveLogToFile() {
+	const extensionPath = path.join(__dirname, '..')
+	const logDirectory = path.join(extensionPath, 'log')
+	
+	if (!fs.existsSync(logDirectory)) {
+		fs.mkdirSync(logDirectory, { recursive: true })
+	}
+	
+	const fileName = startTime + '.json'
+	const filePath = path.join(logDirectory, fileName)
+	
+	try {
+		const logsJson = JSON.stringify(logs, (key, value) => {
+			if (value instanceof Map) {
+				const obj: { [key: string]: any } = {}
+				value.forEach((v, k) => {
+					obj[k] = v
+				})
+				return obj
+			}
+			return value
+		}, 2)
+		
+		fs.writeFileSync(filePath, logsJson, 'utf8')
+		console.log(`Log file saved to: ${filePath}`)
+	} catch (error) {
+		console.error('Error saving log file:', error)
+		vscode.window.showErrorMessage('Failed to save log file: ' + error)
+	}
 }
 
 export function deactivate() {
-	const logsJson = JSON.stringify(logs, null, 2)
-	const baseDirectory = "/Users/suyunhe/virtualme-demo/log/"
-	const fileName = startTime + ".json" 
-	const filePath = path.join(baseDirectory, fileName)
-	fs.writeFileSync(filePath, logsJson, 'utf8')
-
-	// 对logs的日志进行处理
-
+	saveLogToFile()
 }
 
 /**
@@ -240,15 +407,56 @@ async function getArtifactFromSymbolHierarchy(document: vscode.TextDocument, pos
     let name: string = document.uri.toString()
     let type: LogItem.ArtiFactType = LogItem.ArtiFactType.File
 
-    // 将文档 URI 作为最顶层的 Artifact 添加到层级中
-    hierarchys.push(new LogItem.ArtiFact(document.uri.toString(), LogItem.ArtiFactType.File))
+    // 创建简化的作用域上下文结构
+    let scopeContext = {
+        position: {
+            line: position.line + 1,
+            character: position.character + 1
+        },
+        scope: {
+            file: {
+                name: path.basename(document.uri.fsPath),
+                path: document.uri.fsPath
+            },
+            class: undefined as { name: string; } | undefined,
+            method: undefined as { name: string; } | undefined
+        }
+    }
+
+    // 将文档作为最顶层的 Artifact
+    const fileArtifact = new LogItem.ArtiFact(
+        document.uri.toString(), 
+        LogItem.ArtiFactType.File,
+        undefined,
+        scopeContext
+    )
+    hierarchys.push(fileArtifact)
 
     if (symbolHierarchy && symbolHierarchy.length > 0) {
         for (const symbol of symbolHierarchy) {
-            const h = new LogItem.ArtiFact(symbol.name, getSymbolKindDescription(symbol.kind))
+            const symbolContext = { ...scopeContext }
+            
+            // 只记录符号名称
+            if (symbol.kind === vscode.SymbolKind.Class) {
+                symbolContext.scope.class = {
+                    name: symbol.name
+                }
+            } else if (symbol.kind === vscode.SymbolKind.Method || 
+                      symbol.kind === vscode.SymbolKind.Function) {
+                symbolContext.scope.method = {
+                    name: symbol.name
+                }
+            }
+
+            const h = new LogItem.ArtiFact(
+                symbol.name, 
+                getSymbolKindDescription(symbol.kind),
+                undefined,
+                symbolContext
+            )
             hierarchys.push(h)
         }
-        // 如果存在层级，则使用最后一个符号的名称和类型
+        
         name = hierarchys[hierarchys.length - 1].name
         type = hierarchys[hierarchys.length - 1].type
     }
