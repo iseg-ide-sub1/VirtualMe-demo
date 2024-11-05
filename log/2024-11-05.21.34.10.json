@@ -1,0 +1,144 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-11-05 21:34:15.693",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "main()",
+      "type": "Function",
+      "hierarchys": [
+        {
+          "name": "file:///c%3A/Users/hiron/Desktop/Code/test.c",
+          "type": "File",
+          "context": {
+            "position": {
+              "line": 60,
+              "character": 31
+            },
+            "scope": {
+              "file": {
+                "name": "test.c",
+                "path": "c:\\Users\\hiron\\Desktop\\Code\\test.c"
+              },
+              "method": {
+                "name": "main()"
+              }
+            }
+          }
+        },
+        {
+          "name": "main()",
+          "type": "Function",
+          "context": {
+            "position": {
+              "line": 60,
+              "character": 31
+            },
+            "scope": {
+              "file": {
+                "name": "test.c",
+                "path": "c:\\Users\\hiron\\Desktop\\Code\\test.c"
+              },
+              "method": {
+                "name": "main()"
+              }
+            }
+          }
+        }
+      ],
+      "context": {
+        "selection": {
+          "text": "trapezoid_bottom_length",
+          "range": {
+            "start": {
+              "line": 60,
+              "character": 31
+            },
+            "end": {
+              "line": 60,
+              "character": 54
+            }
+          }
+        }
+      }
+    },
+    "detail": {}
+  },
+  {
+    "id": 2,
+    "timeStamp": "2024-11-05 21:34:17.388",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "main()",
+      "type": "Function",
+      "hierarchys": [
+        {
+          "name": "file:///c%3A/Users/hiron/Desktop/Code/test.c",
+          "type": "File",
+          "context": {
+            "position": {
+              "line": 60,
+              "character": 31
+            },
+            "scope": {
+              "file": {
+                "name": "test.c",
+                "path": "c:\\Users\\hiron\\Desktop\\Code\\test.c"
+              },
+              "method": {
+                "name": "main()"
+              }
+            }
+          }
+        },
+        {
+          "name": "main()",
+          "type": "Function",
+          "context": {
+            "position": {
+              "line": 60,
+              "character": 31
+            },
+            "scope": {
+              "file": {
+                "name": "test.c",
+                "path": "c:\\Users\\hiron\\Desktop\\Code\\test.c"
+              },
+              "method": {
+                "name": "main()"
+              }
+            }
+          }
+        }
+      ],
+      "context": {
+        "selection": {
+          "text": "trapezoid_bottom_length",
+          "range": {
+            "start": {
+              "line": 60,
+              "character": 31
+            },
+            "end": {
+              "line": 60,
+              "character": 54
+            }
+          }
+        }
+      }
+    },
+    "detail": {}
+  },
+  {
+    "id": 3,
+    "timeStamp": "2024-11-05 21:34:26.129",
+    "eventType": "Close terminal",
+    "artifact": {
+      "name": "powershell",
+      "type": "Terminal"
+    },
+    "detail": {
+      "processId": 13252
+    }
+  }
+]

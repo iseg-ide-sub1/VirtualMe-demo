@@ -15,13 +15,13 @@ export function activate(context: vscode.ExtensionContext) {
 
 	/** 注册命令：virtualme-demo.virtuame */
 	const disposable = vscode.commands.registerCommand('virtualme-demo.virtualme', () => {
-		vscode.window.showInformationMessage('Thanks for using VirtualME Demo!')
+		vscode.window.showInformationMessage('Recording start. Thanks for using VirtualME Demo!')
 	})
 	context.subscriptions.push(disposable)
 
 	/** 打开文件 */
 	const openTextDocumentWatcher = vscode.workspace.onDidOpenTextDocument(doc => {
-		const artifact = new LogItem.ArtiFact(doc.uri.toString(), LogItem.ArtiFactType.File)
+		const artifact = new LogItem.Artifact(doc.uri.toString(), LogItem.ArtifactType.File)
 		const openTextDocumentLog = new LogItem.OpenTextDocumentLog(artifact)
 		logs.push(openTextDocumentLog)
 		console.log(openTextDocumentLog.toString())
@@ -31,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	/** 关闭文件 */
 	const closeTextDocumentWatcher = vscode.workspace.onDidCloseTextDocument(doc => {
-		const artifact = new LogItem.ArtiFact(doc.uri.toString(), LogItem.ArtiFactType.File)
+		const artifact = new LogItem.Artifact(doc.uri.toString(), LogItem.ArtifactType.File)
 		const closeTextDocumentLog = new LogItem.CloseTextDocumentLog(artifact)
 		logs.push(closeTextDocumentLog)
 		console.log(closeTextDocumentLog.toString())
@@ -41,7 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
 	/** 切换当前文件 */
 	const changeActiveTextDocumentWatcher = vscode.window.onDidChangeActiveTextEditor(editor => {
 		if (editor) {
-			const artifact = new LogItem.ArtiFact(editor.document.uri.toString(), LogItem.ArtiFactType.File)
+			const artifact = new LogItem.Artifact(editor.document.uri.toString(), LogItem.ArtifactType.File)
 			const changeActiveTextDocumentLog = new LogItem.ChangeActiveTextDocumentLog(artifact)
 			logs.push(changeActiveTextDocumentLog)
 			console.log(changeActiveTextDocumentLog.toString())
@@ -234,7 +234,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	/** 新建终端 */
 	const openTerminalWatcher = vscode.window.onDidOpenTerminal(async terminal => {
-		const artifact = new LogItem.ArtiFact(terminal.name, LogItem.ArtiFactType.Terminal)
+		const artifact = new LogItem.Artifact(terminal.name, LogItem.ArtifactType.Terminal)
 		const processId = await getProcessId(terminal.processId)
 		const openTerminalLog = new LogItem.OpenTerminalLog(artifact, processId)
 		logs.push(openTerminalLog)
@@ -244,7 +244,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	/** 关闭终端 */
 	const closeTerminalWatcher = vscode.window.onDidCloseTerminal(async terminal => {
-		const artifact = new LogItem.ArtiFact(terminal.name, LogItem.ArtiFactType.Terminal)
+		const artifact = new LogItem.Artifact(terminal.name, LogItem.ArtifactType.Terminal)
 		const processId = await getProcessId(terminal.processId)
 		const closeTerminalLog = new LogItem.CloseTerminalLog(artifact, processId)
 		logs.push(closeTerminalLog)
@@ -257,7 +257,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (!terminal) {
 			return
 		}
-		const artifact = new LogItem.ArtiFact(terminal.name, LogItem.ArtiFactType.Terminal)
+		const artifact = new LogItem.Artifact(terminal.name, LogItem.ArtifactType.Terminal)
 		const processId = await getProcessId(terminal.processId)
 		const changeActiveTerminalLog = new LogItem.ChangeActiveTerminalLog(artifact, processId)
 		logs.push(changeActiveTerminalLog)
@@ -269,7 +269,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const filesWatcher = vscode.workspace.createFileSystemWatcher('**/*')
 		/** 文件保存 */
         filesWatcher.onDidChange(uri => {
-			const artifact = new LogItem.ArtiFact(uri.toString(), LogItem.ArtiFactType.File)
+			const artifact = new LogItem.Artifact(uri.toString(), LogItem.ArtifactType.File)
 			const saveFileLog = new LogItem.SaveFileLog(artifact)
 			logs.push(saveFileLog)
 			console.log(saveFileLog.toString())
@@ -277,7 +277,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		/** 文件创建 */
         filesWatcher.onDidCreate(uri => {
-			const artifact = new LogItem.ArtiFact(uri.toString(), LogItem.ArtiFactType.File)
+			const artifact = new LogItem.Artifact(uri.toString(), LogItem.ArtifactType.File)
 			const createFile = new LogItem.CreateFileLog(artifact)
 			logs.push(createFile)
 			console.log(createFile.toString())
@@ -285,7 +285,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		/** 文件删除 */
         filesWatcher.onDidDelete(uri => {
-			const artifact = new LogItem.ArtiFact(uri.toString(), LogItem.ArtiFactType.File)
+			const artifact = new LogItem.Artifact(uri.toString(), LogItem.ArtifactType.File)
 			const deleteFile = new LogItem.DeleteFileLog(artifact)
 			logs.push(deleteFile)
 			console.log(deleteFile.toString())
@@ -399,13 +399,13 @@ function getFormattedTime1() {
  * 根据给定的位置获取符号层级，并创建一个 Artifact 对象。
  * @param document 当前文本文档。
  * @param position 文档中的位置。
- * @returns 一个 LogItem.ArtiFact 对象，包含符号层级信息。
+ * @returns 一个 LogItem.Artifact 对象，包含符号层级信息。
  */
-async function getArtifactFromSymbolHierarchy(document: vscode.TextDocument, position: vscode.Position): Promise<LogItem.ArtiFact> {
+async function getArtifactFromSymbolHierarchy(document: vscode.TextDocument, position: vscode.Position): Promise<LogItem.Artifact> {
     const symbolHierarchy = await getSymbolHierarchyAtPosition(document, position)
-    let hierarchys: LogItem.ArtiFact[] = []
+    let hierarchys: LogItem.Artifact[] = []
     let name: string = document.uri.toString()
-    let type: LogItem.ArtiFactType = LogItem.ArtiFactType.File
+    let type: LogItem.ArtifactType = LogItem.ArtifactType.File
 
     // 创建简化的作用域上下文结构
     let scopeContext = {
@@ -424,9 +424,9 @@ async function getArtifactFromSymbolHierarchy(document: vscode.TextDocument, pos
     }
 
     // 将文档作为最顶层的 Artifact
-    const fileArtifact = new LogItem.ArtiFact(
+    const fileArtifact = new LogItem.Artifact(
         document.uri.toString(), 
-        LogItem.ArtiFactType.File,
+        LogItem.ArtifactType.File,
         undefined,
         scopeContext
     )
@@ -448,7 +448,7 @@ async function getArtifactFromSymbolHierarchy(document: vscode.TextDocument, pos
                 }
             }
 
-            const h = new LogItem.ArtiFact(
+            const h = new LogItem.Artifact(
                 symbol.name, 
                 getSymbolKindDescription(symbol.kind),
                 undefined,
@@ -461,7 +461,7 @@ async function getArtifactFromSymbolHierarchy(document: vscode.TextDocument, pos
         type = hierarchys[hierarchys.length - 1].type
     }
 
-    const artifact = new LogItem.ArtiFact(name, type, hierarchys)
+    const artifact = new LogItem.Artifact(name, type, hierarchys)
     return artifact
 }
 
@@ -504,66 +504,66 @@ function findSymbolHierarchyAtPosition(symbols: vscode.DocumentSymbol[], positio
 }
 
 /**
- * 将 SymbolKind 枚举值转换为对应的 ArtiFactType 枚举描述。
+ * 将 SymbolKind 枚举值转换为对应的 ArtifactType 枚举描述。
  * @param kind SymbolKind 枚举值。
- * @returns 对应的 ArtiFactType 枚举值。
+ * @returns 对应的 ArtifactType 枚举值。
  */
-function getSymbolKindDescription(kind: vscode.SymbolKind): LogItem.ArtiFactType {
+function getSymbolKindDescription(kind: vscode.SymbolKind): LogItem.ArtifactType {
     switch (kind) {
         case vscode.SymbolKind.File:
-            return LogItem.ArtiFactType.File
+            return LogItem.ArtifactType.File
         case vscode.SymbolKind.Module:
-            return LogItem.ArtiFactType.Module
+            return LogItem.ArtifactType.Module
         case vscode.SymbolKind.Namespace:
-            return LogItem.ArtiFactType.Namespace
+            return LogItem.ArtifactType.Namespace
         case vscode.SymbolKind.Package:
-            return LogItem.ArtiFactType.Package
+            return LogItem.ArtifactType.Package
         case vscode.SymbolKind.Class:
-            return LogItem.ArtiFactType.Class
+            return LogItem.ArtifactType.Class
         case vscode.SymbolKind.Method:
-            return LogItem.ArtiFactType.Method
+            return LogItem.ArtifactType.Method
         case vscode.SymbolKind.Property:
-            return LogItem.ArtiFactType.Property
+            return LogItem.ArtifactType.Property
         case vscode.SymbolKind.Field:
-            return LogItem.ArtiFactType.Field
+            return LogItem.ArtifactType.Field
         case vscode.SymbolKind.Constructor:
-            return LogItem.ArtiFactType.Constructor
+            return LogItem.ArtifactType.Constructor
         case vscode.SymbolKind.Enum:
-            return LogItem.ArtiFactType.Enum
+            return LogItem.ArtifactType.Enum
         case vscode.SymbolKind.Interface:
-            return LogItem.ArtiFactType.Interface
+            return LogItem.ArtifactType.Interface
         case vscode.SymbolKind.Function:
-            return LogItem.ArtiFactType.Function
+            return LogItem.ArtifactType.Function
         case vscode.SymbolKind.Variable:
-            return LogItem.ArtiFactType.Variable
+            return LogItem.ArtifactType.Variable
         case vscode.SymbolKind.Constant:
-            return LogItem.ArtiFactType.Constant
+            return LogItem.ArtifactType.Constant
         case vscode.SymbolKind.String:
-            return LogItem.ArtiFactType.String
+            return LogItem.ArtifactType.String
         case vscode.SymbolKind.Number:
-            return LogItem.ArtiFactType.Number
+            return LogItem.ArtifactType.Number
         case vscode.SymbolKind.Boolean:
-            return LogItem.ArtiFactType.Boolean
+            return LogItem.ArtifactType.Boolean
         case vscode.SymbolKind.Array:
-            return LogItem.ArtiFactType.Array
+            return LogItem.ArtifactType.Array
         case vscode.SymbolKind.Object:
-            return LogItem.ArtiFactType.Object
+            return LogItem.ArtifactType.Object
         case vscode.SymbolKind.Key:
-            return LogItem.ArtiFactType.Key
+            return LogItem.ArtifactType.Key
         case vscode.SymbolKind.Null:
-            return LogItem.ArtiFactType.Null
+            return LogItem.ArtifactType.Null
         case vscode.SymbolKind.EnumMember:
-            return LogItem.ArtiFactType.EnumMember
+            return LogItem.ArtifactType.EnumMember
         case vscode.SymbolKind.Struct:
-            return LogItem.ArtiFactType.Struct
+            return LogItem.ArtifactType.Struct
         case vscode.SymbolKind.Event:
-            return LogItem.ArtiFactType.Event
+            return LogItem.ArtifactType.Event
         case vscode.SymbolKind.Operator:
-            return LogItem.ArtiFactType.Operator
+            return LogItem.ArtifactType.Operator
         case vscode.SymbolKind.TypeParameter:
-            return LogItem.ArtiFactType.TypeParameter
+            return LogItem.ArtifactType.TypeParameter
         default:
-            return LogItem.ArtiFactType.Unknown
+            return LogItem.ArtifactType.Unknown
     }
 }
 

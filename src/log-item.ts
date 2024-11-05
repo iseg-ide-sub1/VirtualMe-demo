@@ -33,7 +33,7 @@ enum EventType {
     ChangeActiveTerminal = "Change active terminal",
 }
 
-export enum ArtiFactType {
+export enum ArtifactType {
     File = "File",
     Module = "Module",
     Namespace = "Namespace",
@@ -73,53 +73,39 @@ export enum ChangeType {
     Unknown = "Unknown"
 }
 
-export class ArtiFact {
+class Context {
     constructor(
-        public name: string,
-        public type: ArtiFactType,
-        public hierarchys?: ArtiFact[],
-        public context?: {
-            // 编辑位置
-            position?: {
-                line: number;
-                character: number;
-            };
-            // 简化的作用域信息
-            scope?: {
-                file?: {
-                    name: string;
-                    path: string;
-                };
-                class?: {
-                    name: string;
-                };
-                method?: {
-                    name: string;
-                };
-            };
-            // 代码变更信息
-            change?: {
-                type: ChangeType;
-                content: {
-                    before: string;
-                    after: string;
-                };
-                length: {
-                    before: number;
-                    after: number;
-                };
-            };
-            // 选择信息
-            selection?: {
-                text: string;
-                range: {
-                    start: { line: number; character: number };
-                    end: { line: number; character: number };
-                }
+        public position?: { // 编辑位置
+            line: number,
+            character: number
+        },
+        public scope?: { // 简化的作用域信息
+            file?: { name: string, path: string },
+            class?: { name: string },
+            method?: { name: string }
+        },
+        public change?: { // 代码变更信息
+            type: ChangeType,
+            content: { before: string, after: string },
+            length: { before: number, after: number },
+        },
+        public selection?: { // 选择信息
+            text: string,
+            range: {
+                start: { line: number, character: number },
+                end: { line: number, character: number }
             }
         }
-    ) {
-    }
+    ) {}
+}
+
+export class Artifact {
+    constructor(
+        public name: string,
+        public type: ArtifactType,
+        public hierarchys?: Artifact[],
+        public context?: Context
+    ) {}
 
     toString(): string {
         let ret = ""
@@ -142,10 +128,10 @@ export class LogItem {
     id: number
     timeStamp: string
     eventType: EventType
-    artifact: ArtiFact
+    artifact: Artifact
     detail?: Map<string, any>
 
-    constructor(eventType: EventType, artifact: ArtiFact, detail?: Map<string, any>) {
+    constructor(eventType: EventType, artifact: Artifact, detail?: Map<string, any>) {
         this.id = LogItem.#nextId++
         this.timeStamp = getFormattedTime()
         this.eventType = eventType
@@ -201,25 +187,25 @@ export class LogItem {
 }
 
 export class OpenTextDocumentLog extends LogItem {
-    constructor(artifact: ArtiFact) {
+    constructor(artifact: Artifact) {
         super(EventType.OpenTextDocument, artifact)
     }
 }
 
 export class CloseTextDocumentLog extends LogItem {
-    constructor(artifact: ArtiFact) {
+    constructor(artifact: Artifact) {
         super(EventType.CloseTextDocument, artifact)
     }
 }
 
 export class ChangeActiveTextDocumentLog extends LogItem {
-    constructor(artifact: ArtiFact) {
+    constructor(artifact: Artifact) {
         super(EventType.ChangeTextDocument, artifact)
     }
 }
 
 export class AddTextDocumentLog extends LogItem {
-    constructor(artifact: ArtiFact, addContentLength: number, addContent: string) {
+    constructor(artifact: Artifact, addContentLength: number, addContent: string) {
         let detail = new Map<string, any>()
         detail.set("addContentLength", addContentLength)
         detail.set("addContent", addContent)
@@ -228,7 +214,7 @@ export class AddTextDocumentLog extends LogItem {
 }
 
 export class DeleteTextDocumentLog extends LogItem {
-    constructor(artifact: ArtiFact, deleteContentLength: number, deleteContent: string) {
+    constructor(artifact: Artifact, deleteContentLength: number, deleteContent: string) {
         let detail = new Map<string, any>()
         detail.set("deleteContentLength", deleteContentLength)
         detail.set("deleteContent", deleteContent)
@@ -238,7 +224,7 @@ export class DeleteTextDocumentLog extends LogItem {
 
 export class EditTextDocumentLog extends LogItem {
     constructor(
-        artifact: ArtiFact,
+        artifact: Artifact,
         oldContent: string,
         newContent: string
     ) {
@@ -251,44 +237,44 @@ export class EditTextDocumentLog extends LogItem {
 }
 
 export class RedoTextDocumentLog extends LogItem {
-    constructor(artifact: ArtiFact) {
+    constructor(artifact: Artifact) {
         super(EventType.RedoTextDocument, artifact)
     }
 }
 
 export class UndoTextDocumentLog extends LogItem {
-    constructor(artifact: ArtiFact) {
+    constructor(artifact: Artifact) {
         super(EventType.UndoTextDocument, artifact)
     }
 }
 
 export class CreateFileLog extends LogItem {
-    constructor(artifact: ArtiFact) {
+    constructor(artifact: Artifact) {
         super(EventType.CreateFile, artifact)
     }
 }
 
 export class DeleteFileLog extends LogItem {
-    constructor(artifact: ArtiFact) {
+    constructor(artifact: Artifact) {
         super(EventType.DeleteFile, artifact)
     }
 }
 
 export class SaveFileLog extends LogItem {
-    constructor(artifact: ArtiFact) {
+    constructor(artifact: Artifact) {
         super(EventType.SaveFile, artifact)
     }
 }
 
 export class SelectTextLog extends LogItem {
-    constructor(artifact: ArtiFact) {
+    constructor(artifact: Artifact) {
         super(EventType.SelectText, artifact)
     }
 }
 
 
 export class OpenTerminalLog extends LogItem {
-    constructor(artifact: ArtiFact, processId: number) {
+    constructor(artifact: Artifact, processId: number) {
         let detail = new Map<string, any>()
         detail.set("processId", processId)
         super(EventType.OpenTerminal, artifact, detail)
@@ -296,7 +282,7 @@ export class OpenTerminalLog extends LogItem {
 }
 
 export class CloseTerminalLog extends LogItem {
-    constructor(artifact: ArtiFact, processId: number) {
+    constructor(artifact: Artifact, processId: number) {
         let detail = new Map<string, any>()
         detail.set("processId", processId)
         super(EventType.CloseTerminal, artifact, detail)
@@ -304,7 +290,7 @@ export class CloseTerminalLog extends LogItem {
 }
 
 export class ChangeActiveTerminalLog extends LogItem {
-    constructor(artifact: ArtiFact, processId: number) {
+    constructor(artifact: Artifact, processId: number) {
         let detail = new Map<string, any>()
         detail.set("processId", processId)
         super(EventType.ChangeActiveTerminal, artifact, detail)
