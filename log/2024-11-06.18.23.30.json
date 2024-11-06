@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-11-06 18:23:34.648",
+    "eventType": "Close terminal",
+    "Artifact": {
+      "name": "powershell",
+      "type": "Terminal"
+    },
+    "detail": {
+      "processId": 20592
+    }
+  }
+]

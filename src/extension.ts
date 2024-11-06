@@ -2,6 +2,7 @@ import * as vscode from 'vscode'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as LogItem from './log-item'
+import * as common from './common-utils'
 
 let logs: LogItem.LogItem[] = []
 let startTime: string = ""
@@ -11,11 +12,11 @@ let pendingChanges: vscode.TextDocumentContentChangeEvent[] = []
 let lastEditTime: number = 0
 
 export function activate(context: vscode.ExtensionContext) {
-	startTime = getFormattedTime1()
+	startTime = common.getFormattedTime1()
 
 	/** 注册命令：virtualme-demo.virtuame */
 	const disposable = vscode.commands.registerCommand('virtualme-demo.virtualme', () => {
-		vscode.window.showInformationMessage('Recording start. Thanks for using VirtualME Demo!')
+		vscode.window.showInformationMessage(common.getFormattedTime() + ' Recording starts. Thanks for using VirtualMe Demo!')
 	})
 	context.subscriptions.push(disposable)
 
@@ -25,7 +26,6 @@ export function activate(context: vscode.ExtensionContext) {
 		const openTextDocumentLog = new LogItem.OpenTextDocumentLog(artifact)
 		logs.push(openTextDocumentLog)
 		console.log(openTextDocumentLog.toString())
-
 	})
 	context.subscriptions.push(openTextDocumentWatcher)
 
@@ -40,6 +40,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 	/** 切换当前文件 */
 	const changeActiveTextDocumentWatcher = vscode.window.onDidChangeActiveTextEditor(editor => {
+        // 若当前关闭所有编辑视图，editor 值为 undefined
+        // 切换编辑视图，会触发两次此事件，第一次 editor 值为 undefined
 		if (editor) {
 			const artifact = new LogItem.Artifact(editor.document.uri.toString(), LogItem.ArtifactType.File)
 			const changeActiveTextDocumentLog = new LogItem.ChangeActiveTextDocumentLog(artifact)
@@ -50,6 +52,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(changeActiveTextDocumentWatcher)
 
 	/** 用光标选择文本内容 */
+    // 鼠标、键盘、命令都可能触发该事件
     // 仅仅移动光标，也会触发此事件
 	const selectTextWatcher = vscode.window.onDidChangeTextEditorSelection(async event => {
 		const selection = event.selections[0]
@@ -340,59 +343,6 @@ export function deactivate() {
 	saveLogToFile()
 }
 
-/**
- * 获取格式化的当前时间字符串，包括年月日时分秒和毫秒。
- * @returns {string} 格式化的当前时间。
- */
-function getFormattedTime() {
-	const now = new Date()
-	// 获取年月日小时分钟秒和毫秒
-	const year = now.getFullYear()
-	const month = now.getMonth() + 1 // getMonth() 返回的月份从0开始，所以需要加1
-	const day = now.getDate()
-	const hours = now.getHours()
-	const minutes = now.getMinutes()
-	const seconds = now.getSeconds()
-	const milliseconds = now.getMilliseconds()
-  
-	// 格式化月份、日期、小时、分钟、秒和毫秒，不足两位数的前面补零
-	const formattedMonth = month.toString().padStart(2, '0')
-	const formattedDay = day.toString().padStart(2, '0')
-	const formattedHours = hours.toString().padStart(2, '0')
-	const formattedMinutes = minutes.toString().padStart(2, '0')
-	const formattedSeconds = seconds.toString().padStart(2, '0')
-	const formattedMilliseconds = milliseconds.toString().padStart(3, '0')
-  
-	// 组合成最终的字符串
-	const formattedTime = `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}.${formattedMilliseconds}`
-	return formattedTime
-}
-
-/**
- * 获取格式化的当前时间字符串，包括年月日时分秒。
- * @returns {string} 格式化的当前时间。
- */
-function getFormattedTime1() {
-	const now = new Date()
-	// 获取年月日小时分钟秒和毫秒
-	const year = now.getFullYear()
-	const month = now.getMonth() + 1 // getMonth() 返回的月份从0开始，所以需要加1
-	const day = now.getDate()
-	const hours = now.getHours()
-	const minutes = now.getMinutes()
-	const seconds = now.getSeconds()
-  
-	// 格式化月份、日期、小时、分钟、秒和毫秒，不足两位数的前面补零
-	const formattedMonth = month.toString().padStart(2, '0')
-	const formattedDay = day.toString().padStart(2, '0')
-	const formattedHours = hours.toString().padStart(2, '0')
-	const formattedMinutes = minutes.toString().padStart(2, '0')
-	const formattedSeconds = seconds.toString().padStart(2, '0')
-  
-	// 组合成最终的字符串
-	const formattedTime = `${year}-${formattedMonth}-${formattedDay}.${formattedHours}.${formattedMinutes}.${formattedSeconds}`
-	return formattedTime
-}
 
 
 /**

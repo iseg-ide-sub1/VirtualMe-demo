@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-11-06 18:28:04.580",
+    "eventType": "Save file",
+    "artifact": {
+      "name": "file:///c%3A/Users/hiron/Desktop/Code/test2.c",
+      "type": "File"
+    },
+    "detail": {}
+  },
+  {
+    "id": 2,
+    "timeStamp": "2024-11-06 18:28:34.018",
+    "eventType": "Close terminal",
+    "artifact": {
+      "name": "powershell",
+      "type": "Terminal"
+    },
+    "detail": {
+      "processId": 20708
+    }
+  }
+]

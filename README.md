@@ -1,71 +1,39 @@
 # virtualme-demo README
 
-This is the README for your extension "virtualme-demo". After writing up a brief description, we recommend including the following sections.
+收集开发者在IDE内的动作数据，用于开发者意图预测等相关研究。
 
-## Features
+> https://code.visualstudio.com/api/references/vscode-api
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## 开发前准备
 
-For example if there is an image subfolder under your extension project workspace:
+1. 将仓库克隆到本地
+2. 执行 `npm install` 安装项目依赖
+3. 在编辑器中，打开 `src/extension.ts` 文件，然后按 `F5` 或者从命令面板运行 `Debug: Start Debugging`，这将编译并运行扩展程序在一个新的扩展开发主机窗口中；
 
-\!\[feature X\]\(images/feature-x.png\)
+   > 如果发现修改了代码而没在插件中生效，可以先在控制台执行 `npm run watch` 再尝试运行
+   >
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## 开发记录
 
-## Requirements
+在更改项目源代码后请将修改内容记录到 [develop-log.md](./develop-log.md) 中。
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## 项目结构
 
-## Extension Settings
+> 展示部分值得关注的文件夹和文件
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+文件夹
 
-For example:
+- `log` 保存收集的开发者动作数据
+- `src` 源代码文件夹
 
-This extension contributes the following settings:
+文件
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+- `src/extension.ts` 插件入口文件，导出两个函数 `activate` 和 `deactivate`
+- `src/log-item.ts`  定义收集数据的数据项的具体表示方式和数据结构
+- `src/common-utils.ts` 实现项目需要的通用函数
+- `src/process-utils.ts` 实现收集数据的处理函数
+- `develop-log.md` 记录开发过程对项目的修改内容
+- `esbuild.js` 使用 esbuild 构建项目的配置文件
+- `package.json` 项目的配置文件，可配置插件属性
+- `package-lock.json` 锁定项目的依赖版本
+- `tsconfig.json` TypeScript 的配置文件
