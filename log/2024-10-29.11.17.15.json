@@ -1,0 +1,94 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-10-29 11:17:32.321",
+    "eventType": "Add text document",
+    "artifact": {
+      "name": "Inne1rClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "Inne1rClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "timeStamp": "2024-10-29 11:18:53.010",
+    "eventType": "Undo text document",
+    "artifact": {
+      "name": "InnerClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "timeStamp": "2024-10-29 11:19:00.833",
+    "eventType": "Add text document",
+    "artifact": {
+      "name": "Inne1rClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "Inne1rClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "timeStamp": "2024-10-29 11:19:18.042",
+    "eventType": "Delete text document",
+    "artifact": {
+      "name": "InnerClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,207 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-11-05 21:17:42.408",
+    "eventType": "Edit text document",
+    "artifact": {
+      "name": "main()",
+      "type": "Function",
+      "hierarchys": [
+        {
+          "name": "file:///c%3A/Users/hiron/Desktop/Code/test2.c",
+          "type": "File",
+          "context": {
+            "position": {
+              "line": 3,
+              "character": 12
+            },
+            "scope": {
+              "file": {
+                "name": "test2.c",
+                "path": "c:\\Users\\hiron\\Desktop\\Code\\test2.c"
+              },
+              "method": {
+                "name": "main()"
+              }
+            }
+          }
+        },
+        {
+          "name": "main()",
+          "type": "Function",
+          "context": {
+            "position": {
+              "line": 3,
+              "character": 12
+            },
+            "scope": {
+              "file": {
+                "name": "test2.c",
+                "path": "c:\\Users\\hiron\\Desktop\\Code\\test2.c"
+              },
+              "method": {
+                "name": "main()"
+              }
+            }
+          }
+        }
+      ],
+      "context": {
+        "change": {
+          "type": "Edit",
+          "content": {
+            "before": ";",
+            "after": "\r\n    \r\n    \r\n    scanf(\"%d%d\",&a,&b);\r\n;"
+          },
+          "length": {
+            "before": 1,
+            "after": 41
+          }
+        }
+      }
+    },
+    "detail": {
+      "oldContent": ";",
+      "newContent": "\r\n    \r\n    \r\n    scanf(\"%d%d\",&a,&b);\r\n;",
+      "contentLengthChange": 40
+    }
+  },
+  {
+    "id": 2,
+    "timeStamp": "2024-11-05 21:17:43.658",
+    "eventType": "Open text document",
+    "artifact": {
+      "name": "file:///c%3A/Users/hiron/Desktop/Code/test.c",
+      "type": "File"
+    },
+    "detail": {}
+  },
+  {
+    "id": 3,
+    "timeStamp": "2024-11-05 21:17:43.662",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///c%3A/Users/hiron/Desktop/Code/test.c",
+      "type": "File"
+    },
+    "detail": {}
+  },
+  {
+    "id": 4,
+    "timeStamp": "2024-11-05 21:17:43.822",
+    "eventType": "Save file",
+    "artifact": {
+      "name": "file:///c%3A/Users/hiron/Desktop/Code/test2.c",
+      "type": "File"
+    },
+    "detail": {}
+  },
+  {
+    "id": 5,
+    "timeStamp": "2024-11-05 21:17:45.839",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "file:///c%3A/Users/hiron/Desktop/Code/test.c",
+      "type": "File",
+      "hierarchys": [
+        {
+          "name": "file:///c%3A/Users/hiron/Desktop/Code/test.c",
+          "type": "File",
+          "context": {
+            "position": {
+              "line": 1,
+              "character": 1
+            },
+            "scope": {
+              "file": {
+                "name": "test.c",
+                "path": "c:\\Users\\hiron\\Desktop\\Code\\test.c"
+              }
+            }
+          }
+        }
+      ],
+      "context": {
+        "selection": {
+          "text": "#include <stdio.h>\r\n#include <conio.h>\r\n#include <ctype.h>\r\n// 计算圆周长、圆面积、圆柱表面积、圆柱体积\r\nvoid calculate_cylinder(int radius, int height) {\r\n    double pi = 3.14;\r\n    double circumference = 2 * pi * radius;\r\n    double area = pi * radius * radius;\r\n    double surface_area = 2 * (area + circumference * height);\r\n    double volume = (double)radius * radius * height;\r\n\r\n    printf(\"圆柱体的周长是 %.2f\\n\", circumference);\r\n    printf(\"圆柱体的面积是 %.2f\\n\", area);\r\n    printf(\"圆柱体的表面积是 %.2f\\n\", surface_area);\r\n    printf(\"圆柱体的体积是 %.2f\\n\", volume);\r\n}\r\n\r\n// 将两个小写英文字母转换为大写并输出\r\nvoid convert_to_uppercase(char c1, char c2) {\r\n    printf(\"%c %c\\n\", toupper(c1), toupper(c2));\r\n}\r\n\r\n// 计算 z=8x^2-5y^2+3x-6y+4 的值\r\nvoid calculate_expression(double x, double y) {\r\n    double result = 8 * x * x - 5 * y * y + 3 * x - 6 * y + 4;\r\n    printf(\"表达式的值是 %.2f\\n\", result);\r\n}\r\n\r\n// 计算等腰梯形的周长和面积\r\nvoid calculate_trapezoid(int top_length, int bottom_length, int height) {\r\n    int side_lengths[2] = {top_length, bottom_length};\r\n    int perimeter = top_length + bottom_length + (side_lengths[0] + side_lengths[1]) * 2;\r\n    int area = (side_lengths[0] + side_lengths[1]) / 2 * height;\r\n\r\n    printf(\"等腰梯形的周长是 %d\\n\", perimeter);\r\n    printf(\"等腰梯形的面积是 %d\\n\", area);\r\n}\r\n\r\nint main() {\r\n    // 输入圆柱体数据并计算\r\n    int cylinder_radius, cylinder_height;\r\n    scanf(\"%d%d\", &cylinder_radius, &cylinder_height);\r\n    calculate_cylinder(cylinder_radius, cylinder_height);\r\n\r\n    // 输入两个小写字母并转换成大写字母\r\n    char c1, c2;\r\n    getchar(); // 跳过换行符\r\n    c1 = getchar();\r\n    getchar(); // 跳过换行符\r\n    c2 = getch();\r\n    getchar();\r\n    convert_to_uppercase(c1, c2);\r\n\r\n    // 输入两个实数并计算表达式\r\n    double expression_x, expression_y;\r\n    scanf(\"%lf%lf\", &expression_x, &expression_y);\r\n    calculate_expression(expression_x, expression_y);\r\n\r\n    // 输入等腰梯形数据并计算\r\n    int trapezoid_top_length, trapezoid_bottom_length, trapezoid_height;\r\n    scanf(\"%d%d%d\", &trapezoid_top_length, &trapezoid_bottom_length, &trapezoid_height);\r\n    calculate_trapezoid(trapezoid_top_length, trapezoid_bottom_length, trapezoid_height);\r\n\r\n    return 0;\r\n}",
+          "range": {
+            "start": {
+              "line": 1,
+              "character": 1
+            },
+            "end": {
+              "line": 65,
+              "character": 2
+            }
+          }
+        }
+      }
+    },
+    "detail": {}
+  },
+  {
+    "id": 6,
+    "timeStamp": "2024-11-05 21:17:47.482",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "file:///c%3A/Users/hiron/Desktop/Code/test.c",
+      "type": "File",
+      "hierarchys": [
+        {
+          "name": "file:///c%3A/Users/hiron/Desktop/Code/test.c",
+          "type": "File",
+          "context": {
+            "position": {
+              "line": 1,
+              "character": 1
+            },
+            "scope": {
+              "file": {
+                "name": "test.c",
+                "path": "c:\\Users\\hiron\\Desktop\\Code\\test.c"
+              }
+            }
+          }
+        }
+      ],
+      "context": {
+        "selection": {
+          "text": "#include <stdio.h>\r\n#include <conio.h>\r\n#include <ctype.h>\r\n// 计算圆周长、圆面积、圆柱表面积、圆柱体积\r\nvoid calculate_cylinder(int radius, int height) {\r\n    double pi = 3.14;\r\n    double circumference = 2 * pi * radius;\r\n    double area = pi * radius * radius;\r\n    double surface_area = 2 * (area + circumference * height);\r\n    double volume = (double)radius * radius * height;\r\n\r\n    printf(\"圆柱体的周长是 %.2f\\n\", circumference);\r\n    printf(\"圆柱体的面积是 %.2f\\n\", area);\r\n    printf(\"圆柱体的表面积是 %.2f\\n\", surface_area);\r\n    printf(\"圆柱体的体积是 %.2f\\n\", volume);\r\n}\r\n\r\n// 将两个小写英文字母转换为大写并输出\r\nvoid convert_to_uppercase(char c1, char c2) {\r\n    printf(\"%c %c\\n\", toupper(c1), toupper(c2));\r\n}\r\n\r\n// 计算 z=8x^2-5y^2+3x-6y+4 的值\r\nvoid calculate_expression(double x, double y) {\r\n    double result = 8 * x * x - 5 * y * y + 3 * x - 6 * y + 4;\r\n    printf(\"表达式的值是 %.2f\\n\", result);\r\n}\r\n\r\n// 计算等腰梯形的周长和面积\r\nvoid calculate_trapezoid(int top_length, int bottom_length, int height) {\r\n    int side_lengths[2] = {top_length, bottom_length};\r\n    int perimeter = top_length + bottom_length + (side_lengths[0] + side_lengths[1]) * 2;\r\n    int area = (side_lengths[0] + side_lengths[1]) / 2 * height;\r\n\r\n    printf(\"等腰梯形的周长是 %d\\n\", perimeter);\r\n    printf(\"等腰梯形的面积是 %d\\n\", area);\r\n}\r\n\r\nint main() {\r\n    // 输入圆柱体数据并计算\r\n    int cylinder_radius, cylinder_height;\r\n    scanf(\"%d%d\", &cylinder_radius, &cylinder_height);\r\n    calculate_cylinder(cylinder_radius, cylinder_height);\r\n\r\n    // 输入两个小写字母并转换成大写字母\r\n    char c1, c2;\r\n    getchar(); // 跳过换行符\r\n    c1 = getchar();\r\n    getchar(); // 跳过换行符\r\n    c2 = getch();\r\n    getchar();\r\n    convert_to_uppercase(c1, c2);\r\n\r\n    // 输入两个实数并计算表达式\r\n    double expression_x, expression_y;\r\n    scanf(\"%lf%lf\", &expression_x, &expression_y);\r\n    calculate_expression(expression_x, expression_y);\r\n\r\n    // 输入等腰梯形数据并计算\r\n    int trapezoid_top_length, trapezoid_bottom_length, trapezoid_height;\r\n    scanf(\"%d%d%d\", &trapezoid_top_length, &trapezoid_bottom_length, &trapezoid_height);\r\n    calculate_trapezoid(trapezoid_top_length, trapezoid_bottom_length, trapezoid_height);\r\n\r\n    return 0;\r\n}",
+          "range": {
+            "start": {
+              "line": 1,
+              "character": 1
+            },
+            "end": {
+              "line": 65,
+              "character": 2
+            }
+          }
+        }
+      }
+    },
+    "detail": {}
+  },
+  {
+    "id": 7,
+    "timeStamp": "2024-11-05 21:17:47.892",
+    "eventType": "Save file",
+    "artifact": {
+      "name": "file:///c%3A/Users/hiron/Desktop/Code/test.c",
+      "type": "File"
+    },
+    "detail": {}
+  },
+  {
+    "id": 8,
+    "timeStamp": "2024-11-05 21:17:54.643",
+    "eventType": "Close terminal",
+    "artifact": {
+      "name": "powershell",
+      "type": "Terminal"
+    },
+    "detail": {
+      "processId": 17744
+    }
+  }
+]

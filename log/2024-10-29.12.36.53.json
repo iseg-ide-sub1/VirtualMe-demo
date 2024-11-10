@@ -1,0 +1,1647 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-10-29 12:36:56.469",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "File",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "timeStamp": "2024-10-29 12:36:56.535",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+      "type": "File",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "timeStamp": "2024-10-29 12:37:04.988",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "timeStamp": "2024-10-29 12:37:05.131",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "timeStamp": "2024-10-29 12:37:10.267",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "outerData",
+      "type": "Field",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "outerData",
+          "type": "Field"
+        }
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "timeStamp": "2024-10-29 12:37:10.412",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "outerData",
+      "type": "Field",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "outerData",
+          "type": "Field"
+        }
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "timeStamp": "2024-10-29 12:37:36.708",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "innerData",
+      "type": "Field",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "innerData",
+          "type": "Field"
+        }
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "timeStamp": "2024-10-29 12:37:36.873",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "innerData",
+      "type": "Field",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "innerData",
+          "type": "Field"
+        }
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "timeStamp": "2024-10-29 12:37:56.432",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "timeStamp": "2024-10-29 12:37:56.476",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 11,
+    "timeStamp": "2024-10-29 12:37:56.490",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 12,
+    "timeStamp": "2024-10-29 12:37:56.502",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 13,
+    "timeStamp": "2024-10-29 12:37:56.517",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 14,
+    "timeStamp": "2024-10-29 12:37:56.529",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 15,
+    "timeStamp": "2024-10-29 12:37:56.542",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 16,
+    "timeStamp": "2024-10-29 12:37:56.555",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 17,
+    "timeStamp": "2024-10-29 12:37:56.570",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 18,
+    "timeStamp": "2024-10-29 12:37:56.582",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 19,
+    "timeStamp": "2024-10-29 12:38:03.014",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "OuterClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 20,
+    "timeStamp": "2024-10-29 12:38:03.981",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "display() const",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "display() const",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 21,
+    "timeStamp": "2024-10-29 12:38:04.137",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "display() const",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "display() const",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 22,
+    "timeStamp": "2024-10-29 12:38:27.095",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "display() const",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "display() const",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 23,
+    "timeStamp": "2024-10-29 12:38:27.117",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "display() const",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "display() const",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 24,
+    "timeStamp": "2024-10-29 12:38:27.129",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "display() const",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "display() const",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 25,
+    "timeStamp": "2024-10-29 12:38:33.588",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "setInnerData(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "setInnerData(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 26,
+    "timeStamp": "2024-10-29 12:38:33.641",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "setInnerData(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "setInnerData(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 27,
+    "timeStamp": "2024-10-29 12:38:33.663",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "setInnerData(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "setInnerData(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 28,
+    "timeStamp": "2024-10-29 12:38:33.676",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "setInnerData(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "setInnerData(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 29,
+    "timeStamp": "2024-10-29 12:38:44.294",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 30,
+    "timeStamp": "2024-10-29 12:38:44.345",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 31,
+    "timeStamp": "2024-10-29 12:38:44.371",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 32,
+    "timeStamp": "2024-10-29 12:38:44.383",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 33,
+    "timeStamp": "2024-10-29 12:38:44.397",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 34,
+    "timeStamp": "2024-10-29 12:38:44.409",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass()",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass()",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 35,
+    "timeStamp": "2024-10-29 12:38:44.422",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass()",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass()",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 36,
+    "timeStamp": "2024-10-29 12:38:44.435",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass()",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass()",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 37,
+    "timeStamp": "2024-10-29 12:38:44.462",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 38,
+    "timeStamp": "2024-10-29 12:38:44.706",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass()",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass()",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 39,
+    "timeStamp": "2024-10-29 12:38:45.159",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 40,
+    "timeStamp": "2024-10-29 12:38:45.169",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 41,
+    "timeStamp": "2024-10-29 12:38:45.183",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 42,
+    "timeStamp": "2024-10-29 12:38:45.195",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 43,
+    "timeStamp": "2024-10-29 12:38:45.209",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 44,
+    "timeStamp": "2024-10-29 12:38:45.222",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 45,
+    "timeStamp": "2024-10-29 12:38:45.235",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 46,
+    "timeStamp": "2024-10-29 12:38:45.636",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 47,
+    "timeStamp": "2024-10-29 12:38:45.665",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 48,
+    "timeStamp": "2024-10-29 12:38:45.691",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 49,
+    "timeStamp": "2024-10-29 12:38:45.798",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 50,
+    "timeStamp": "2024-10-29 12:38:45.822",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 51,
+    "timeStamp": "2024-10-29 12:38:45.836",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 52,
+    "timeStamp": "2024-10-29 12:38:45.849",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 53,
+    "timeStamp": "2024-10-29 12:38:45.862",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass(int)",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass(int)",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 54,
+    "timeStamp": "2024-10-29 12:38:45.876",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass()",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass()",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 55,
+    "timeStamp": "2024-10-29 12:38:45.888",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass()",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass()",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 56,
+    "timeStamp": "2024-10-29 12:38:46.373",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 57,
+    "timeStamp": "2024-10-29 12:38:46.423",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 58,
+    "timeStamp": "2024-10-29 12:38:46.584",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 59,
+    "timeStamp": "2024-10-29 12:38:46.622",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass()",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass()",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 60,
+    "timeStamp": "2024-10-29 12:38:46.635",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass()",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass()",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 61,
+    "timeStamp": "2024-10-29 12:38:46.648",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass()",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass()",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 62,
+    "timeStamp": "2024-10-29 12:38:46.662",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass()",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass()",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 63,
+    "timeStamp": "2024-10-29 12:38:46.675",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass()",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass()",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 64,
+    "timeStamp": "2024-10-29 12:38:46.905",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass()",
+      "type": "Method",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass()",
+          "type": "Method"
+        }
+      ]
+    }
+  },
+  {
+    "id": 65,
+    "timeStamp": "2024-10-29 12:38:46.917",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 66,
+    "timeStamp": "2024-10-29 12:38:46.957",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        }
+      ]
+    }
+  },
+  {
+    "id": 67,
+    "timeStamp": "2024-10-29 12:38:46.983",
+    "eventType": "Select text",
+    "artifact": {
+      "name": "InnerClass",
+      "type": "Class",
+      "hierarchy": [
+        {
+          "name": "file:///Users/suyunhe/code/cpp/test10.cpp",
+          "type": "File"
+        },
+        {
+          "name": "OuterClass",
+          "type": "Class"
+        },
+        {
+          "name": "InnerClass",
+          "type": "Class"
+        }
+      ]
+    }
+  }
+]

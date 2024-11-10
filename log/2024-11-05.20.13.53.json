@@ -1,0 +1,308 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-11-05 20:13:58.435",
+    "eventType": "Open text document",
+    "artifact": {
+      "name": "file:///c%3A/Users/hiron/Desktop/Code/test2.c",
+      "type": "File"
+    },
+    "detail": {}
+  },
+  {
+    "id": 2,
+    "timeStamp": "2024-11-05 20:13:58.440",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///c%3A/Users/hiron/Desktop/Code/test2.c",
+      "type": "File"
+    },
+    "detail": {}
+  },
+  {
+    "id": 3,
+    "timeStamp": "2024-11-05 20:14:01.132",
+    "eventType": "Add text document",
+    "artifact": {
+      "name": "main()",
+      "type": "Function",
+      "hierarchys": [
+        {
+          "name": "file:///c%3A/Users/hiron/Desktop/Code/test2.c",
+          "type": "File",
+          "context": {
+            "position": {
+              "line": 3,
+              "character": 13
+            },
+            "scope": {
+              "file": {
+                "name": "test2.c",
+                "path": "c:\\Users\\hiron\\Desktop\\Code\\test2.c"
+              },
+              "method": {
+                "name": "main()"
+              }
+            }
+          }
+        },
+        {
+          "name": "main()",
+          "type": "Function",
+          "context": {
+            "position": {
+              "line": 3,
+              "character": 13
+            },
+            "scope": {
+              "file": {
+                "name": "test2.c",
+                "path": "c:\\Users\\hiron\\Desktop\\Code\\test2.c"
+              },
+              "method": {
+                "name": "main()"
+              }
+            }
+          }
+        }
+      ],
+      "context": {
+        "change": {
+          "type": "Add",
+          "content": {
+            "before": "",
+            "after": "\r\n    "
+          },
+          "length": {
+            "before": 0,
+            "after": 6
+          }
+        }
+      }
+    },
+    "detail": {
+      "addContentLength": 6,
+      "addContent": "\r\n    "
+    }
+  },
+  {
+    "id": 4,
+    "timeStamp": "2024-11-05 20:14:03.838",
+    "eventType": "Edit text document",
+    "artifact": {
+      "name": "main()",
+      "type": "Function",
+      "hierarchys": [
+        {
+          "name": "file:///c%3A/Users/hiron/Desktop/Code/test2.c",
+          "type": "File",
+          "context": {
+            "position": {
+              "line": 4,
+              "character": 5
+            },
+            "scope": {
+              "file": {
+                "name": "test2.c",
+                "path": "c:\\Users\\hiron\\Desktop\\Code\\test2.c"
+              },
+              "method": {
+                "name": "main()"
+              }
+            }
+          }
+        },
+        {
+          "name": "main()",
+          "type": "Function",
+          "context": {
+            "position": {
+              "line": 4,
+              "character": 5
+            },
+            "scope": {
+              "file": {
+                "name": "test2.c",
+                "path": "c:\\Users\\hiron\\Desktop\\Code\\test2.c"
+              },
+              "method": {
+                "name": "main()"
+              }
+            }
+          }
+        }
+      ],
+      "context": {
+        "change": {
+          "type": "Edit",
+          "content": {
+            "before": "sca",
+            "after": "ssccaan"
+          },
+          "length": {
+            "before": 3,
+            "after": 7
+          }
+        }
+      }
+    },
+    "detail": {
+      "oldContent": "sca",
+      "newContent": "ssccaan",
+      "contentLengthChange": 4
+    }
+  },
+  {
+    "id": 5,
+    "timeStamp": "2024-11-05 20:14:14.311",
+    "eventType": "Edit text document",
+    "artifact": {
+      "name": "main()",
+      "type": "Function",
+      "hierarchys": [
+        {
+          "name": "file:///c%3A/Users/hiron/Desktop/Code/test2.c",
+          "type": "File",
+          "context": {
+            "position": {
+              "line": 4,
+              "character": 9
+            },
+            "scope": {
+              "file": {
+                "name": "test2.c",
+                "path": "c:\\Users\\hiron\\Desktop\\Code\\test2.c"
+              },
+              "method": {
+                "name": "main()"
+              }
+            }
+          }
+        },
+        {
+          "name": "main()",
+          "type": "Function",
+          "context": {
+            "position": {
+              "line": 4,
+              "character": 9
+            },
+            "scope": {
+              "file": {
+                "name": "test2.c",
+                "path": "c:\\Users\\hiron\\Desktop\\Code\\test2.c"
+              },
+              "method": {
+                "name": "main()"
+              }
+            }
+          }
+        }
+      ],
+      "context": {
+        "change": {
+          "type": "Edit",
+          "content": {
+            "before": "f(\"%d%d\",&a,&b);\r\n    ",
+            "after": "ff()()\"\"\"%%dd%%dd\",,^&&aa,,&&bb)llong;;\r\n    \r\n    printf(\"%d\",a+b);"
+          },
+          "length": {
+            "before": 22,
+            "after": 68
+          }
+        }
+      }
+    },
+    "detail": {
+      "oldContent": "f(\"%d%d\",&a,&b);\r\n    ",
+      "newContent": "ff()()\"\"\"%%dd%%dd\",,^&&aa,,&&bb)llong;;\r\n    \r\n    printf(\"%d\",a+b);",
+      "contentLengthChange": 46
+    }
+  },
+  {
+    "id": 6,
+    "timeStamp": "2024-11-05 20:14:15.657",
+    "eventType": "Save file",
+    "artifact": {
+      "name": "file:///c%3A/Users/hiron/Desktop/Code/test2.c",
+      "type": "File"
+    },
+    "detail": {}
+  },
+  {
+    "id": 7,
+    "timeStamp": "2024-11-05 20:14:18.038",
+    "eventType": "Open text document",
+    "artifact": {
+      "name": "file:///c%3A/Users/hiron/Desktop/Code/actions.json",
+      "type": "File"
+    },
+    "detail": {}
+  },
+  {
+    "id": 8,
+    "timeStamp": "2024-11-05 20:14:18.043",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///c%3A/Users/hiron/Desktop/Code/actions.json",
+      "type": "File"
+    },
+    "detail": {}
+  },
+  {
+    "id": 9,
+    "timeStamp": "2024-11-05 20:14:20.191",
+    "eventType": "Change text document",
+    "artifact": {
+      "name": "file:///c%3A/Users/hiron/Desktop/Code/test2.c",
+      "type": "File"
+    },
+    "detail": {}
+  },
+  {
+    "id": 10,
+    "timeStamp": "2024-11-05 20:14:21.544",
+    "eventType": "Open terminal",
+    "artifact": {
+      "name": "",
+      "type": "Terminal"
+    },
+    "detail": {
+      "processId": 11848
+    }
+  },
+  {
+    "id": 11,
+    "timeStamp": "2024-11-05 20:14:21.544",
+    "eventType": "Change active terminal",
+    "artifact": {
+      "name": "",
+      "type": "Terminal"
+    },
+    "detail": {
+      "processId": 11848
+    }
+  },
+  {
+    "id": 12,
+    "timeStamp": "2024-11-05 20:14:30.989",
+    "eventType": "Save file",
+    "artifact": {
+      "name": "file:///c%3A/Users/hiron/Desktop/Code/a.exe",
+      "type": "File"
+    },
+    "detail": {}
+  },
+  {
+    "id": 13,
+    "timeStamp": "2024-11-05 20:15:13.327",
+    "eventType": "Close terminal",
+    "artifact": {
+      "name": "powershell",
+      "type": "Terminal"
+    },
+    "detail": {
+      "processId": 11848
+    }
+  }
+]

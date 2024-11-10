@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "timeStamp": "2024-10-29 14:03:48.408",
+    "eventType": "Close text document",
+    "artifact": {
+      "name": "output:tasks",
+      "type": "File"
+    }
+  },
+  {
+    "id": 2,
+    "timeStamp": "2024-10-29 14:03:50.648",
+    "eventType": "Open text document",
+    "artifact": {
+      "name": "",
+      "type": "Terminal"
+    }
+  },
+  {
+    "id": 3,
+    "timeStamp": "2024-10-29 14:04:22.251",
+    "eventType": "Open text document",
+    "artifact": {
+      "name": "",
+      "type": "Terminal"
+    }
+  },
+  {
+    "id": 4,
+    "timeStamp": "2024-10-29 14:04:52.214",
+    "eventType": "Close text document",
+    "artifact": {
+      "name": "zsh",
+      "type": "Terminal"
+    }
+  }
+]
